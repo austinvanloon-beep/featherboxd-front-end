@@ -1,3 +1,6 @@
+import styles from './NavBar.module.css';
+import Logo from '../../assets/images/logo.svg';
+
 import { useContext } from 'react';
 import { Link } from 'react-router';
 
@@ -12,7 +15,8 @@ const NavBar = () => {
   };
 
   return (
-    <nav>
+    <nav className={styles.container}>
+      <Link to='/'><img src={Logo} alt='A cute owl' /></Link>
       {user ? (
         <ul>
           <li><Link to='/'>HOME</Link></li>
