@@ -2,7 +2,66 @@ import { useState } from "react";
 import BirdLocationDetails from "../BirdLocationDetails/BirdLocationDetails";
 
 const BirdSearch = (props) => {
-    const [region, setRegion] = useState('');
+    const [region, setRegion] = useState('US-AL');
+
+    const regionData = [
+        { _id: '1', label: 'Alabama', value: 'US-AL' },
+        { _id: '2', label: 'Alaska', value: 'US-AK' },
+        { _id: '3', label: 'Arizona', value: 'US-AZ' },
+        { _id: '4', label: 'Arkansas', value: 'US-AR' },
+        { _id: '5', label: 'California', value: 'US-CA' },
+        { _id: '6', label: 'Colorado', value: 'US-CO' },
+        { _id: '7', label: 'Connecticut', value: 'US-CT' },
+        { _id: '8', label: 'Delaware', value: 'US-DE' },
+        { _id: '9', label: 'Florida', value: 'US-FL' },
+        { _id: '10', label: 'Georgia', value: 'US-GA' },
+        { _id: '11', label: 'Hawaii', value: 'US-HI' },
+        { _id: '12', label: 'Idaho', value: 'US-ID' },
+        { _id: '13', label: 'Illinois', value: 'US-IL' },
+        { _id: '14', label: 'Indiana', value: 'US-IN' },
+        { _id: '15', label: 'Iowa', value: 'US-IA' },
+        { _id: '16', label: 'Kansas', value: 'US-KS' },
+        { _id: '17', label: 'Kentucky', value: 'US-KY' },
+        { _id: '18', label: 'Lousiana', value: 'US-LA' },
+        { _id: '19', label: 'Maine', value: 'US-ME' },
+        { _id: '20', label: 'Maryland', value: 'US-MD' },
+        { _id: '21', label: 'Massachusetts', value: 'US-MA' },
+        { _id: '22', label: 'Michigan', value: 'US-MI' },
+        { _id: '23', label: 'Minnesota', value: 'US-MN' },
+        { _id: '24', label: 'Mississippi', value: 'US-MS' },
+        { _id: '25', label: 'Missouri', value: 'US-MO' },
+        { _id: '26', label: 'Montana', value: 'US-MT' },
+        { _id: '27', label: 'Nebraska', value: 'US-NE' },
+        { _id: '28', label: 'Nevada', value: 'US-NV' },
+        { _id: '29', label: 'New Hampshire', value: 'US-NH' },
+        { _id: '30', label: 'New Jersey', value: 'US-NJ' },
+        { _id: '31', label: 'New Mexico', value: 'US-NM' },
+        { _id: '32', label: 'New York', value: 'US-NY' },
+        { _id: '33', label: 'North Carolina', value: 'US-NC' },
+        { _id: '34', label: 'North Dakota', value: 'US-ND' },
+        { _id: '35', label: 'Ohio', value: 'US-OH' },
+        { _id: '36', label: 'Oklahoma', value: 'US-OK' },
+        { _id: '37', label: 'Oregon', value: 'US-OR' },
+        { _id: '38', label: 'Pennsylvania', value: 'US-PA' },
+        { _id: '39', label: 'Rhode Island', value: 'US-RI' },
+        { _id: '40', label: 'South Carolina', value: 'US-SC' },
+        { _id: '41', label: 'South Dakota', value: 'US-SD' },
+        { _id: '42', label: 'Tennessee', value: 'US-TN' },
+        { _id: '43', label: 'Texas', value: 'US-TX' },
+        { _id: '44', label: 'Utah', value: 'US-UT' },
+        { _id: '45', label: 'Vermont', value: 'US-VT' },
+        { _id: '46', label: 'Virginia', value: 'US-VA' },
+        { _id: '47', label: 'Washington', value: 'US-WA' },
+        { _id: '48', label: 'West Virginia', value: 'US-AL' },
+        { _id: '49', label: 'Wisconsin', value: 'US-WI' },
+        { _id: '50', label: 'Wyoming', value: 'US-WY' },
+        { _id: '51', label: 'Washington, D.C.', value: 'US-DC' },
+        { _id: '52', label: 'Puerto Rico', value: 'PR' },
+        { _id: '53', label: 'US Virgin Islands', value: 'VI'},
+        { _id: '54', label: 'Guam', value: 'GU' },
+        { _id: '55', label: 'Northern Mariana Islands', value: 'MP' },
+        { _id: '56', label: 'American Samoa', value: 'AS'}
+    ]
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -14,13 +73,12 @@ const BirdSearch = (props) => {
         <>
         <h1>Bird Search</h1>
         <form onSubmit={handleSubmit}>
-            <label htmlFor="region">Enter a region:</label>
-            <input
-                id="region"
-                type="value"
-                value={region}
-                onChange={(event) => setRegion(event.target.value)}
-            />
+            <label htmlFor="region">Select a region:</label>
+            <select onChange={(event => setRegion(event.target.value))}>
+                {regionData.map((region) => (
+                    <option key={region._id} value={region.value}>{region.label}</option>
+                ))}
+            </select>
             <button type="submit">Search</button>
         </form>
         <BirdLocationDetails results={props.results}/>
