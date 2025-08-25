@@ -1,9 +1,19 @@
 import { useState } from "react";
 import BirdLocationDetails from "../BirdLocationDetails/BirdLocationDetails";
 
-const BirdSearch = (props) => {
+import * as birdLocationService from '../../../src/services/birdLocationService';
+
+const BirdSearch = () => {
     const [region, setRegion] = useState('US-AL');
     const [displayedRegion, setDisplayedRegion] = useState('');
+
+    const [results, setResults] = useState([]);
+
+    const fetchData = async (region) => {
+        const data = await birdLocationService.show(region);
+
+        setResults(data);
+    }
 
     const regionData = [
         { _id: '1', label: 'Alabama', value: 'US-AL' },
@@ -66,27 +76,26 @@ const BirdSearch = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.fetchData(region);
+        fetchData(region);
         setDisplayedRegion(region);
     }
 
     return (
         <>
-        <h1>Bird Search</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="region">Select a region:</label>
-            <select onChange={(event => setRegion(event.target.value))}>
-                {regionData.map((region) => (
-                    <option key={region._id} value={region.value}>{region.label}</option>
-                ))}
-            </select>
-            <button type="submit">Search</button>
-        </form>
-        <BirdLocationDetails 
-            results={props.results} 
-            region={region} 
-            regionData={regionData}
-            displayedRegion={displayedRegion}
+            <h1>Bird Search</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="region">Select a region:</label>
+                <select onChange={(event => setRegion(event.target.value))}>
+                    {regionData.map((region) => (
+                        <option key={region._id} value={region.value}>{region.label}</option>
+                    ))}
+                </select>
+                <button type="submit">Search</button>
+            </form>
+            <BirdLocationDetails 
+                results={results} 
+                regionData={regionData}
+                displayedRegion={displayedRegion}
             />
         </>
     )

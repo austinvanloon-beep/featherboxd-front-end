@@ -15,7 +15,6 @@ import BirdSearch from './components/BirdSearch/BirdSearch';
 import { UserContext } from './contexts/UserContext';
 
 import * as hootService from './services/hootService';
-import * as birdLocationService from './services/birdLocationService';
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -23,15 +22,6 @@ const App = () => {
   const [hoots, setHoots] = useState([]);
 
   const navigate = useNavigate();
-
-  const [results, setResults] = useState([]);
-
-  const fetchData = async (region) => {
-    const data = await birdLocationService.show(region);
-
-    setResults(data);
-
-  }
 
   useEffect(() => {
     const fetchAllHoots = async () => {
@@ -87,7 +77,7 @@ const App = () => {
           <>
             <Route path='/sign-up' element={<SignUpForm />} />
             <Route path='/sign-in' element={<SignInForm />} />
-            <Route path='/location-search' element={<BirdSearch fetchData={fetchData} results={results}/>} />
+            <Route path='/location-search' element={<BirdSearch />} />
           </>
         )}
       </Routes>
