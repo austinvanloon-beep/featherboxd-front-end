@@ -4,7 +4,7 @@ const BirdLocationDetails = (props) => {
     
     return (
         <section>
-            <h2>Search Results For: {props.regionData.map((data) => data.value === props.displayedRegion ? data.label : data.region) }</h2>
+            <h2>Search Results For: {props.regionData.map((data) => data.value === props.displayedRegion ? data.label : '') }</h2>
             <div className={styles.results}>
                 {props.results.map((result, index) => (
                     <div key={index} className={styles.result}>
