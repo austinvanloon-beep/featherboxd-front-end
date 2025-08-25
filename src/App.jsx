@@ -10,6 +10,7 @@ import HootList from './components/HootList/HootList';
 import HootDetails from './components/HootDetails/HootDetails';
 import HootForm from './components/HootForm/HootForm';
 import CommentForm from './components/CommentForm/CommentForm';
+import BirdSearch from './components/BirdSearch/BirdSearch';
 
 import { UserContext } from './contexts/UserContext';
 
@@ -77,6 +78,7 @@ const App = () => {
           element={user ? <CommentForm /> : <SignInForm />} 
         />
 
+        <Route path='/location-search' element={<BirdSearch />} />
         <Route path='/sign-up' element={<SignUpForm />} />
         <Route path='/sign-in' element={<SignInForm />} />
       </Routes>
