@@ -52,32 +52,33 @@ const App = () => {
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <Routes>
         <Route path='/' element={user ? <Dashboard /> : <Landing />} />
-        {user ? (
-          <>
-            <Route path='/hoots' element={<HootList hoots={hoots}/>} />
-            <Route 
-              path='/hoots/:hootId'
-              element={ <HootDetails handleDeleteHoot={handleDeleteHoot}/> }
-            />
-            <Route path='/hoots/new' element={ <HootForm handleAddHoot={handleAddHoot} />} />
-            <Route
-              path='/hoots/:hootId/edit'
-              element={<HootForm handleUpdateHoot={handleUpdateHoot} />}
-            />
-            <Route
-              path='/hoots/:hootId/comments/:commentId/edit'
-              element={<CommentForm />}
-            />
-          </>
-        ) : (
-          <>
-            <Route path='/sign-up' element={<SignUpForm />} />
-            <Route path='/sign-in' element={<SignInForm />} />
-          </>
-        )}
+
+        <Route 
+          path='/hoots' 
+          element={user ? <HootList hoots={hoots}/> : <SignInForm />} 
+        />
+        <Route 
+          path='/hoots/:hootId'
+          element={user ? <HootDetails handleDeleteHoot={handleDeleteHoot}/> : <SignInForm />} 
+        />
+        <Route 
+          path='/hoots/new' 
+          element={user ? <HootForm handleAddHoot={handleAddHoot} /> : <SignInForm />} 
+        />
+        <Route
+          path='/hoots/:hootId/edit'
+          element={user ? <HootForm handleUpdateHoot={handleUpdateHoot} /> : <SignInForm />} 
+        />
+        <Route
+          path='/hoots/:hootId/comments/:commentId/edit'
+          element={user ? <CommentForm /> : <SignInForm />} 
+        />
+
+        <Route path='/sign-up' element={<SignUpForm />} />
+        <Route path='/sign-in' element={<SignInForm />} />
       </Routes>
     </>
   );
