@@ -1,11 +1,12 @@
-const API_KEY = '8blrbs0j67mn';
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 const BASE_URL = 'https://api.ebird.org/v2/data/obs/';
 const END_POINT = '/recent/notable'
 
 const show = async (region) => {
     try {
         const res = await fetch(BASE_URL + region + END_POINT, {
-            headers: { "X-eBirdApiToken": `${API_KEY}` }
+            headers: { "X-eBirdApiToken": API_KEY }
         });
         if (!res.ok) {
             throw new Error('Failed to fetch data.');
