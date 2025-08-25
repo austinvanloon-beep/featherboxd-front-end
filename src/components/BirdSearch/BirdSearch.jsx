@@ -3,6 +3,7 @@ import BirdLocationDetails from "../BirdLocationDetails/BirdLocationDetails";
 
 const BirdSearch = (props) => {
     const [region, setRegion] = useState('US-AL');
+    const [displayedRegion, setDisplayedRegion] = useState('');
 
     const regionData = [
         { _id: '1', label: 'Alabama', value: 'US-AL' },
@@ -52,7 +53,7 @@ const BirdSearch = (props) => {
         { _id: '45', label: 'Vermont', value: 'US-VT' },
         { _id: '46', label: 'Virginia', value: 'US-VA' },
         { _id: '47', label: 'Washington', value: 'US-WA' },
-        { _id: '48', label: 'West Virginia', value: 'US-AL' },
+        { _id: '48', label: 'West Virginia', value: 'US-WV' },
         { _id: '49', label: 'Wisconsin', value: 'US-WI' },
         { _id: '50', label: 'Wyoming', value: 'US-WY' },
         { _id: '51', label: 'Washington, D.C.', value: 'US-DC' },
@@ -66,7 +67,7 @@ const BirdSearch = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.fetchData(region);
-        setRegion('');
+        setDisplayedRegion(region);
     }
 
     return (
@@ -81,7 +82,12 @@ const BirdSearch = (props) => {
             </select>
             <button type="submit">Search</button>
         </form>
-        <BirdLocationDetails results={props.results}/>
+        <BirdLocationDetails 
+            results={props.results} 
+            region={region} 
+            regionData={regionData}
+            displayedRegion={displayedRegion}
+            />
         </>
     )
 
