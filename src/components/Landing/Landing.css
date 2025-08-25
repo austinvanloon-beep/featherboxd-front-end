@@ -1,0 +1,107 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Landing Page Container */
+.landing-page {
+  position: relative;
+  min-height: 100vh;
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/060/022/278/small_2x/a-bird-sitting-on-a-branch-photo.jpeg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 100px;
+  min-height: 100vh;
+}
+
+.greeting-box {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 40px 30px;
+  border-radius: 30px;
+  max-width: 600px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.greeting-box h1 {
+  font-size: 2.5rem;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+.greeting-box p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #555;
+   text-align: center;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn.primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn.secondary {
+  background-color: transparent;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
+
+.btn.secondary:hover {
+  background-color: #e0f2fe;
+}
+
+/* Footer (Bottom Right Contact/Social) */
+.footer {
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.footer a {
+  color: #2563eb;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
