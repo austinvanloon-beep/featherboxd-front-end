@@ -5,7 +5,7 @@ const END_POINT = '/recent/notable'
 const show = async (region) => {
     try {
         const res = await fetch(BASE_URL + region + END_POINT, {
-            headers: { "X-eBirdApiToken": `${API_KEY}` }
+            headers: { "X-eBirdApiToken": API_KEY }
         });
         if (!res.ok) {
             throw new Error('Failed to fetch data.');

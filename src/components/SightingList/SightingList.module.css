@@ -1,7 +1,3 @@
-/* src/components/HootList/HootList.module.css */
-
-/* List styling */
-
 .container {
   gap: 14px;
   width: 100%;
@@ -29,8 +25,6 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
-
-/* Hoot card styling */
 
 .container article {
   width: 100%;

@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
-import * as hootService from '../../services/hootService';
+import * as sightingService from '../../services/sightingService';
 
 const CommentForm = (props) => {
   const [formData, setFormData] = useState({ text: '' });
 
-  const { hootId, commentId } = useParams();
+  const { sightingId, commentId } = useParams();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchHoot = async () => {
-      const hootData = await hootService.show(hootId);
-
-      setFormData(hootData.comments.find((comment) => comment._id === commentId));
-    }
-    if (hootId && commentId) fetchHoot();
-  }, [hootId, commentId]);
+    const fetchSighting = async () => {
+      const sightingData = await sightingService.show(sightingId);
+      setFormData(
+        sightingData.comments.find((comment) => comment._id === commentId)
+      );
+    };
+    if (sightingId && commentId) fetchSighting();
+  }, [sightingId, commentId]);
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -25,9 +26,9 @@ const CommentForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (hootId && commentId) {
-      hootService.updateComment(hootId, commentId, formData);
-      navigate(`/hoots/${hootId}`);
+    if (sightingId && commentId) {
+      sightingService.updateComment(sightingId, commentId, formData);
+      navigate(`/sightings/${sightingId}`);
     } else {
       props.handleAddComment(formData);
     }
