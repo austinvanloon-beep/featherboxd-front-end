@@ -6,49 +6,49 @@ import SignUpForm from './components/SignUpForm/SignUpForm';
 import SignInForm from './components/SignInForm/SignInForm';
 import Landing from './components/Landing/Landing';
 import Dashboard from './components/Dashboard/Dashboard';
-import HootList from './components/HootList/HootList';
-import HootDetails from './components/HootDetails/HootDetails';
-import HootForm from './components/HootForm/HootForm';
+import SightingList from './components/SightingList/SightingList';
+import SightingDetails from './components/SightingDetails/SightingDetails';
+import SightingForm from './components/SightingForm/SightingForm';
 import CommentForm from './components/CommentForm/CommentForm';
 import BirdSearch from './components/BirdSearch/BirdSearch';
 
 import { UserContext } from './contexts/UserContext';
 
-import * as hootService from './services/hootService';
+import * as sightingService from './services/sightingService';
 
 const App = () => {
   const { user } = useContext(UserContext);
 
-  const [hoots, setHoots] = useState([]);
+  const [sightings, setSightings] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAllHoots = async () => {
-      const hootsData = await hootService.index();
+    const fetchAllSightings = async () => {
+      const sightingsData = await sightingService.index();
 
-      setHoots(hootsData);
+      setSightings(sightingsData);
     };
 
-    if (user) fetchAllHoots();
+    if (user) fetchAllSightings();
   }, [user]);
 
-  const handleAddHoot = async (hootFormData) => {
-    const newHoot = await hootService.create(hootFormData);
-    setHoots([newHoot, ...hoots]);
-    navigate('/hoots');
+  const handleAddSighting = async (sightingFormData) => {
+    const newSighting = await sightingService.create(sightingFormData);
+    setSightings([newSighting, ...sightings]);
+    navigate('/sightings');
   }
 
-  const handleDeleteHoot = async (hootId) => {
-    const deletedHoot = await hootService.deleteHoot(hootId);
-    setHoots(hoots.filter((hoot) => hoot._id !== deletedHoot._id));
-    navigate('/hoots');
+  const handleDeleteSighting = async (sightingId) => {
+    const deletedSighting = await sightingService.deleteSighting(sightingId);
+    setSightings(sightings.filter((sighting) => sighting._id !== deletedSighting._id));
+    navigate('/sightings');
   }
 
-  const handleUpdateHoot = async (hootId, hootFormData) => {
-    const updatedHoot = await hootService.update(hootId, hootFormData);
-    setHoots(hoots.map((hoot) => (hootId === hoot._id ? updatedHoot : hoot)));
-    navigate(`/hoots/${hootId}`);
+  const handleUpdateSighting = async (sightingId, sightingFormData) => {
+    const updatedSighting = await sightingService.update(sightingId, sightingFormData);
+    setSightings(sightings.map((sighting) => (sightingId === sighting._id ? updatedSighting : sighting)));
+    navigate(`/sightings/${sightingId}`);
   }
 
   return (
@@ -58,23 +58,23 @@ const App = () => {
         <Route path='/' element={user ? <Dashboard /> : <Landing />} />
 
         <Route 
-          path='/hoots' 
-          element={user ? <HootList hoots={hoots}/> : <SignInForm />} 
+          path='/sightings' 
+          element={user ? <SightingList sightings={sightings}/> : <SignInForm />} 
         />
         <Route 
-          path='/hoots/:hootId'
-          element={user ? <HootDetails handleDeleteHoot={handleDeleteHoot}/> : <SignInForm />} 
+          path='/sightings/:sightingId'
+          element={user ? <SightingDetails handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />} 
         />
         <Route 
-          path='/hoots/new' 
-          element={user ? <HootForm handleAddHoot={handleAddHoot} /> : <SignInForm />} 
+          path='/sightings/new' 
+          element={user ? <SightingForm handleAddSighting={handleAddSighting} /> : <SignInForm />} 
         />
         <Route
-          path='/hoots/:hootId/edit'
-          element={user ? <HootForm handleUpdateHoot={handleUpdateHoot} /> : <SignInForm />} 
+          path='/sightings/:sightingId/edit'
+          element={user ? <SightingForm handleUpdateSighting={handleUpdateSighting} /> : <SignInForm />} 
         />
         <Route
-          path='/hoots/:hootId/comments/:commentId/edit'
+          path='/sightings/:sightingId/comments/:commentId/edit'
           element={user ? <CommentForm /> : <SignInForm />} 
         />
 
@@ -87,3 +87,4 @@ const App = () => {
 };
 
 export default App;
+

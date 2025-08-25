@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 
-import * as hootService from '../../services/hootService';
+import * as sightingService from '../../services/sightingService';
 
-const HootForm = (props) => {
-  const { hootId } = useParams();
+const SightingForm = (props) => {
+  const { sightingId } = useParams();
   const [formData, setFormData] = useState({
     title: '',
     text: '',
-    category: 'News',
+    category: 'Species',
   });
 
   useEffect(() => {
-    const fetchHoot = async () => {
-      const hootData = await hootService.show(hootId);
-      setFormData(hootData);
-    }
+    const fetchSighting = async () => {
+      const sightingData = await sightingService.show(sightingId);
+      setFormData(sightingData);
+    };
 
-    if (hootId) fetchHoot();
+    if (sightingId) fetchSighting();
 
     return () => setFormData({ title: '', text: '', category: 'News' });
-  }, [hootId])
+  }, [sightingId]);
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -28,16 +28,16 @@ const HootForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (hootId) {
-      props.handleUpdateHoot(hootId, formData);
+    if (sightingId) {
+      props.handleUpdateSighting(sightingId, formData);
     } else {
-      props.handleAddHoot(formData);
+      props.handleAddSighting(formData);
     }
   };
 
   return (
     <main>
-      <h1>{hootId ? 'Edit Hoot' : 'New Hoot'}</h1>
+      <h1>{sightingId ? 'Edit Sighting' : 'New Sighting'}</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor='title-input'>Title</label>
         <input
@@ -65,12 +65,11 @@ const HootForm = (props) => {
           value={formData.category}
           onChange={handleChange}
         >
-          <option value='News'>News</option>
-          <option value='Games'>Games</option>
-          <option value='Music'>Music</option>
-          <option value='Movies'>Movies</option>
-          <option value='Sports'>Sports</option>
-          <option value='Television'>Television</option>
+          <option value='Waterfowl'>Waterfowl</option>
+          <option value='Perching Bird'>Perching Bird</option>
+          <option value='Raptors'>Raptors</option>
+          <option value='Others'>Others'</option>
+          
         </select>
         <button type='submit'>SUBMIT</button>
       </form>
@@ -78,4 +77,5 @@ const HootForm = (props) => {
   );
 };
 
-export default HootForm;
+export default SightingForm;
+
