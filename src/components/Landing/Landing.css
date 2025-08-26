@@ -1,27 +1,29 @@
-/* Global Reset */
+/* Global Reset (kept global) */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
 }
 
 /* Landing Page Container */
 .landing-page {
-  position: relative;
   min-height: 100vh;
-  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/060/022/278/small_2x/a-bird-sitting-on-a-branch-photo.jpeg'); /* Replace with your image path */
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExamo1NXdmNGYzN2tiZmwycjZ3YmRvbmw3bXlqaTZrb3Z2bjZidXhsaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/m0pnkCXTtEiGs/giphy.gif');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   overflow-x: hidden;
+  position: relative;
 }
 
 /* Hero Section */
-.hero-section {
+.landing-page .hero-section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +32,7 @@ body, html {
   min-height: 100vh;
 }
 
-.greeting-box {
+.landing-page .greeting-box {
   background: rgba(255, 255, 255, 0.85);
   padding: 40px 30px;
   border-radius: 30px;
@@ -38,7 +40,7 @@ body, html {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.greeting-box h1 {
+.landing-page .greeting-box h1 {
   font-size: 2.5rem;
   font-family: 'Lato', sans-serif;
   margin-bottom: 20px;
@@ -46,21 +48,21 @@ body, html {
   text-align: center;
 }
 
-.greeting-box p {
+.landing-page .greeting-box p {
   font-size: 1.2rem;
   margin-bottom: 30px;
   color: #555;
-   text-align: center;
+  text-align: center;
 }
 
-.cta-buttons {
+.landing-page .cta-buttons {
   display: flex;
   gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.btn {
+.landing-page .btn {
   text-decoration: none;
   padding: 12px 24px;
   border-radius: 25px;
@@ -68,27 +70,27 @@ body, html {
   transition: all 0.3s ease;
 }
 
-.btn.primary {
+.landing-page .btn.primary {
   background-color: #2563eb;
   color: white;
 }
 
-.btn.primary:hover {
+.landing-page .btn.primary:hover {
   background-color: #1d4ed8;
 }
 
-.btn.secondary {
+.landing-page .btn.secondary {
   background-color: transparent;
   color: #2563eb;
   border: 2px solid #2563eb;
 }
 
-.btn.secondary:hover {
+.landing-page .btn.secondary:hover {
   background-color: #e0f2fe;
 }
 
-/* Footer (Bottom Right Contact/Social) */
-.footer {
+/* Footer */
+.landing-page .footer {
   position: absolute;
   bottom: 20px;
   right: 40px;
@@ -96,12 +98,12 @@ body, html {
   color: #444;
 }
 
-.footer a {
+.landing-page .footer a {
   color: #2563eb;
   text-decoration: none;
   margin-left: 5px;
 }
 
-.footer a:hover {
+.landing-page .footer a:hover {
   text-decoration: underline;
 }
