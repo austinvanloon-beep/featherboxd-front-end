@@ -1,81 +1,83 @@
 import { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 
+
 import * as userService from '../../services/userService';
 import * as sightingService from '../../services/sightingService';
+import './Dashboard.css';
 
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
-  const [ users, setUsers ] = useState([]);
+  const [users, setUsers] = useState([]);
   const [sightings, setSightings] = useState([]);
 
-// fetch user(s)
+
+  // fetch users (future community tab)
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const fetchedUsers = await userService.index();
         setUsers(fetchedUsers);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
-    if (user) fetchUsers();
-  }, [user]);
+    };
+    if (user) fetchUsers()
+  }, [user])
+
 
   // fetch sightings
   useEffect(() => {
-  const fetchSightings = async () => {
-    try {
-      const fetchedSightings = await sightingService.index();
-      setSightings(fetchedSightings);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  if (user) fetchSightings();
-}, [user]);
+    const fetchSightings = async () => {
+      try {
+        const fetchedSightings = await sightingService.index()
+        setSightings(fetchedSightings)
+      } catch (err) {
+        console.log(err)
+      }
+    };
+    if (user) fetchSightings()
+  }, [user])
 
 
   return (
-    <main>
-      <h1>Welcome, {user.username}!</h1>
-      <p>
-        This is the dashboard page where you can see a list of all the users.
-      </p>
-      {/* users list */}
-      <ul>
-        {users.map(user => (
+    <main className="dashboard-container">
+      <h1 className="dashboard-title">Welcome, {user.username}</h1>
+      <div className="dashboard-header">
+      <h2 className="dashboard-title">Blue Jay</h2>
+      </div>
+      
+      <div className="sightings-grid">
+        {sightings.length > 0 ? (
+          sightings.map((sighting) => (
+            <div key={sighting._id} className="sighting-card">
+              <img src={sighting.imageUrl} alt={sighting.title} />
+              <h3>{sighting.title}</h3>
+              {/* comment/rating buttons here later */}
+            </div>
+          ))
+        ) : (
+          <>
+            <div className="sighting-box">Sighting 1</div>
+            <div className="sighting-box">Sighting 2</div>
+            <div className="sighting-box">Sighting 3</div>
+          </>
+        )}
+      </div>
+
+      {/* move below to community tab later */}
+      {/* 
+      <ul className="user-list">
+        {users.map((user) => (
           <li key={user._id}>{user.username}</li>
         ))}
-      </ul>
-      {/* bird title */}
-      <section className="my-6 text-center">
-        <h2 className="text-3xl font-bold">Blue jay</h2>
-      </section>
-
-      {/* sighting grid */}
-      <section className="grid grid-cols-3 gap-6 px-6">
-        {sightings.map(sighting => (
-         <div
-            key={sighting._id}
-            className="bg-white rounded-xl shadow-lg overflow-hidden"
-          >
-            <img
-              src={sighting.imageUrl}
-              alt="bird sighting"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4 flex justify-around text-sm text-gray-600">
-              <button className="hover:text-blue-500">💬 Comment</button>
-              <button className="hover:text-green-500">🏷️ Tag</button>
-              <button className="hover:text-yellow-500">⭐ Rate</button>
-            </div>
-          </div>
-        ))}
-      </section>
+      </ul> 
+      */}
     </main>
-  )
+  );
 };
 
-export default Dashboard;
+
+export default Dashboard
+
