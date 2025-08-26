@@ -16,18 +16,18 @@ const NavBar = () => {
 
   return (
     <nav className={styles.container}>
-      <Link to='/'><img src={Logo} alt='A cute owl' /></Link>
+      <Link to='/'><img src={Logo} alt='Featherboxd Logo' /></Link>
       {user ? (
         <ul>
           <li><Link to='/'>HOME</Link></li>
-          <li><Link to='/hoots'>SIGHTINGS</Link></li>
-          <li><Link to='/hoots/new'>CREATE NEW</Link></li>
+          <li><Link to='/sightings'>SIGHTINGS</Link></li>
+          <li><Link to='/sightings/new'>CREATE NEW</Link></li>
+          <li><Link to='/location-search'>SIGHTINGS BY REGION</Link></li>
+          <li><Link to='/species-search'>SPECIES BY REGION</Link></li>
           <li><Link to='/' onClick={handleSignOut}>SIGN OUT</Link></li>
         </ul>
       ) : (
         <ul>
-          <li><Link to='/location-search'>Search Sightings</Link></li>
-          <li><Link to='/species-search'>Search Species</Link></li>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sign-in'>Sign In</Link></li>
           <li><Link to='/sign-up'>Sign Up</Link></li>
