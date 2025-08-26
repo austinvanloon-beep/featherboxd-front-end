@@ -2,8 +2,9 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
 
 import { signIn } from '../../services/authService';
-
 import { UserContext } from '../../contexts/UserContext';
+
+import styles from './SignInForm.module.css';
 
 const SignInForm = () => {
   const navigate = useNavigate();
@@ -31,41 +32,53 @@ const SignInForm = () => {
   };
 
   return (
-    <main>
-      <h1>Sign In</h1>
-      <p>{message}</p>
-      <form autoComplete='off' onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='email'>Username:</label>
-          <input
-            type='text'
-            autoComplete='off'
-            id='username'
-            value={formData.username}
-            name='username'
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
-          <input
-            type='password'
-            autoComplete='off'
-            id='password'
-            value={formData.password}
-            name='password'
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button>Sign In</button>
-          <button onClick={() => navigate('/')}>Cancel</button>
-        </div>
-      </form>
-    </main>
+    <>
+      <div className={styles.signInBackground} />
+      <main className={styles.signInMain}>
+        <h1 className={styles.signInTitle}>Sign In</h1>
+        <p className={styles.signInMessage}>{message}</p>
+        <form className={styles.signInForm} autoComplete="off" onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="username" className={styles.label}>Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className={styles.input}
+              autoComplete="off"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className={styles.input}
+              autoComplete="off"
+            />
+          </div>
+          <div className={styles.buttonGroup}>
+            <button type="submit" className={`${styles.button} ${styles.primaryBtn}`}>Sign In</button>
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className={`${styles.button} ${styles.secondaryBtn}`}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </main>
+    </>
   );
 };
 
 export default SignInForm;
+
