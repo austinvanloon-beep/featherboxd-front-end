@@ -26,7 +26,8 @@ const NavBar = () => {
         </ul>
       ) : (
         <ul>
-          <li><Link to='/location-search'>Search</Link></li>
+          <li><Link to='/location-search'>Search Sightings</Link></li>
+          <li><Link to='/species-search'>Search Species</Link></li>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sign-in'>Sign In</Link></li>
           <li><Link to='/sign-up'>Sign Up</Link></li>
