@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
-
 import { signUp } from '../../services/authService';
-
 import { UserContext } from '../../contexts/UserContext';
+import styles from './SignUpForm.module.css';
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -38,46 +37,65 @@ const SignUpForm = () => {
   };
 
   return (
-    <main>
-      <h1>Sign Up</h1>
-      <p>{message}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='username'>Username:</label>
+    <main className={styles.signUpMain}>
+      <h1 className={styles.signUpTitle}>Sign Up Now!</h1>
+      {message && <p className={styles.signUpMessage}>{message}</p>}
+
+      <form className={styles.signUpForm} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="username">Username:</label>
           <input
-            type='text'
-            id='username'
+            className={styles.input}
+            type="text"
+            id="username"
             value={username}
-            name='username'
+            name="username"
             onChange={handleChange}
             required
           />
         </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
+
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="password">Password:</label>
           <input
-            type='password'
-            id='password'
+            className={styles.input}
+            type="password"
+            id="password"
             value={password}
-            name='password'
+            name="password"
             onChange={handleChange}
             required
           />
         </div>
-        <div>
-          <label htmlFor='confirm'>Confirm Password:</label>
+
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="confirm">Confirm Password:</label>
           <input
-            type='password'
-            id='confirm'
+            className={styles.input}
+            type="password"
+            id="confirm"
             value={passwordConf}
-            name='passwordConf'
+            name="passwordConf"
             onChange={handleChange}
             required
           />
         </div>
-        <div>
-          <button disabled={isFormInvalid()}>Sign Up</button>
-          <button onClick={() => navigate('/')}>Cancel</button>
+
+        <div className={styles.buttonGroup}>
+          <button
+            className={`${styles.button} ${styles.primaryBtn}`}
+            type="submit"
+            disabled={isFormInvalid()}
+          >
+            Sign Up
+          </button>
+          <button
+            className={`${styles.button} ${styles.secondaryBtn}`}
+            type="button"
+            onClick={() => navigate('/')}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </main>
