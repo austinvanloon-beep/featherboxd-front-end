@@ -23,6 +23,9 @@ const Dashboard = () => {
     alert(`Like clicked for sighting ${sightingId}`)
   };
 
+  const handleImage = (sightingId) => {
+    alert(`Tag clicked for sighting ${sightingId}`)
+  };
 //   const handleRating = (sightingId, rating) => {
 //   alert(`Rated ${rating} stars for sighting ${sightingId}`);
 // };
@@ -43,6 +46,7 @@ const Dashboard = () => {
   }, [user]);
 
   return (
+
   <main className="dashboard-container">
     <div className="dashboard-header">
       <h1 className="dashboard-title">Welcome, {user.username}</h1>
@@ -80,17 +84,17 @@ const Dashboard = () => {
 </div>
 
 
-          </div>
-        ))
-      ) : (
-        <>
-          <div className="sighting-box">Sighting 1</div>
-          <div className="sighting-box">Sighting 2</div>
-          <div className="sighting-box">Sighting 3</div>
-        </>
-      )}
-    </div>
-  </main>
+            </div>
+          ))
+        ) : (
+          <>
+            <div className="sighting-box">Sighting 1</div>
+            <div className="sighting-box">Sighting 2</div>
+            <div className="sighting-box">Sighting 3</div>
+          </>
+        )}
+      </div>
+    </main>
 
   );
 };
