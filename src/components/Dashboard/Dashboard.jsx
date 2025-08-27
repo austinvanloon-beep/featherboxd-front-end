@@ -22,6 +22,11 @@ const Dashboard = () => {
     alert(`Like clicked for sighting ${sightingId}`)
   };
 
+  const handleImage = (sightingId) => {
+    alert(`Tag clicked for sighting ${sightingId}`)
+  };
+
+
 
   // fetch sightings
   useEffect(() => {
@@ -37,37 +42,38 @@ const Dashboard = () => {
   }, [user]);
 
   return (
-  <main className="dashboard-container">
-    <div className="dashboard-header">
-      <h1 className="dashboard-title">Welcome, {user.username}</h1>
-    </div>
-
-    <div className="bird-title-wrapper">
-      <h2 className="bird-title">Blue jay</h2>
-    </div>
-
-    <div className="sightings-grid">
-      {sightings.length > 0 ? (
-        sightings.map((sighting) => (
-          <div key={sighting._id} className="sighting-card">
-            <img src={sighting.imageUrl} alt={sighting.title} />
-      <div className="sighting-actions">
-        <button onClick={() => handleComment(sighting._id)}>Comment</button>
-        <button onClick={() => handleTag(sighting._id)}>Tag</button>
-        <button onClick={() => handleLike(sighting._id)}>Like</button>
+    <main className="dashboard-container">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Welcome, {user.username}</h1>
       </div>
 
-          </div>
-        ))
-      ) : (
-        <>
-          <div className="sighting-box">Sighting 1</div>
-          <div className="sighting-box">Sighting 2</div>
-          <div className="sighting-box">Sighting 3</div>
-        </>
-      )}
-    </div>
-  </main>
+      <div className="bird-title-wrapper">
+        <h2 className="bird-title">Blue jay</h2>
+      </div>
+
+      <div className="sightings-grid">
+        {sightings.length > 0 ? (
+          sightings.map((sighting) => (
+            <div key={sighting._id} className="sighting-card">
+              <img src={sighting.imageUrl} alt={sighting.title} />
+              <div className="sighting-actions">
+                <button onClick={() => handleComment(sighting._id)}>Comment</button>
+                <button onClick={() => handleTag(sighting._id)}>Tag</button>
+                <button onClick={() => handleLike(sighting._id)}>Like</button>
+                <button onClick={() => handleImage(sighting._id)}>Insert URL</button>
+              </div>
+
+            </div>
+          ))
+        ) : (
+          <>
+            <div className="sighting-box">Sighting 1</div>
+            <div className="sighting-box">Sighting 2</div>
+            <div className="sighting-box">Sighting 3</div>
+          </>
+        )}
+      </div>
+    </main>
 
   );
 };
