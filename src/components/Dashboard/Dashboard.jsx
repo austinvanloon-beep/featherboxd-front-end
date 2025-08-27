@@ -23,9 +23,9 @@ const Dashboard = () => {
     alert(`Like clicked for sighting ${sightingId}`)
   };
 
-//   const handleRating = (sightingId, rating) => {
-//   alert(`Rated ${rating} stars for sighting ${sightingId}`);
-// };
+  const handleRating = (sightingId, rating) => {
+  alert(`Rated ${rating} stars for sighting ${sightingId}`);
+};
 
 
 
@@ -49,7 +49,7 @@ const Dashboard = () => {
     </div>
 
     <div className="bird-title-wrapper">
-      <h2 className="bird-title">Blue jay</h2>
+      <h2 className="bird-title">Here are your sightings:</h2>
     </div>
 
     <div className="sightings-grid">
@@ -57,7 +57,8 @@ const Dashboard = () => {
         sightings.map((sighting) => (
           <div key={sighting._id} className="sighting-card">
 <img src={sighting.imageUrl} alt={sighting.title} />
-<p style={{color: 'red'}}>TEST MESSAGE UNDER SIGHTING</p>
+
+{/* <p style={{color: 'red'}}>TEST MESSAGE UNDER SIGHTING</p>*/}
 
 
 {/* ratings */}
@@ -77,6 +78,7 @@ const Dashboard = () => {
 <div className="sighting-actions">
   <button onClick={() => handleComment(sighting._id)}>Comment</button>
   <button onClick={() => handleTag(sighting._id)}>Tag</button>
+  <button onClick={() => handleLike(sighting._id)}>Like</button>
 </div>
 
 
