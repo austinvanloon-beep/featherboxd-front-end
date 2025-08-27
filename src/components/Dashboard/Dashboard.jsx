@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 import { UserContext } from '../../contexts/UserContext';
 
 import * as sightingService from '../../services/sightingService';
@@ -21,6 +22,11 @@ const Dashboard = () => {
   const handleLike = (sightingId) => {
     alert(`Like clicked for sighting ${sightingId}`)
   };
+
+//   const handleRating = (sightingId, rating) => {
+//   alert(`Rated ${rating} stars for sighting ${sightingId}`);
+// };
+
 
 
   // fetch sightings
@@ -50,12 +56,29 @@ const Dashboard = () => {
       {sightings.length > 0 ? (
         sightings.map((sighting) => (
           <div key={sighting._id} className="sighting-card">
-            <img src={sighting.imageUrl} alt={sighting.title} />
-      <div className="sighting-actions">
-        <button onClick={() => handleComment(sighting._id)}>Comment</button>
-        <button onClick={() => handleTag(sighting._id)}>Tag</button>
-        <button onClick={() => handleLike(sighting._id)}>Like</button>
-      </div>
+<img src={sighting.imageUrl} alt={sighting.title} />
+<p style={{color: 'red'}}>TEST MESSAGE UNDER SIGHTING</p>
+
+
+{/* ratings */}
+<div className="sighting-rating">
+  {[1, 2, 3, 4, 5].map((star) => (
+    <span
+      key={star}
+      onClick={() => handleRating(sighting._id, star)}
+      style={{ cursor: 'pointer', fontSize: '20px', marginRight: '4px' }}
+    >
+      ★
+    </span>
+  ))}
+</div>
+
+{/* actions */}
+<div className="sighting-actions">
+  <button onClick={() => handleComment(sighting._id)}>Comment</button>
+  <button onClick={() => handleTag(sighting._id)}>Tag</button>
+</div>
+
 
           </div>
         ))
