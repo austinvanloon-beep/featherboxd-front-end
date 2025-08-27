@@ -84,22 +84,6 @@ const Dashboard = () => {
 </div>
 
 
-      <div className="bird-title-wrapper">
-        <h2 className="bird-title">Blue jay</h2>
-      </div>
-
-      <div className="sightings-grid">
-        {sightings.length > 0 ? (
-          sightings.map((sighting) => (
-            <div key={sighting._id} className="sighting-card">
-              <img src={sighting.imageUrl} alt={sighting.title} />
-              <div className="sighting-actions">
-                <button onClick={() => handleComment(sighting._id)}>Comment</button>
-                <button onClick={() => handleTag(sighting._id)}>Tag</button>
-                <button onClick={() => handleLike(sighting._id)}>Like</button>
-                <button onClick={() => handleImage(sighting._id)}>Insert URL</button>
-              </div>
-
             </div>
           ))
         ) : (
