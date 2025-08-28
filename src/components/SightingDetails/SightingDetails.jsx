@@ -14,11 +14,11 @@ const SightingDetails = (props) => {
   const [sighting, setSighting] = useState(null);
   const { user } = useContext(UserContext);
   const { sightingId } = useParams();
-  const [info, setInfo] = useState({"origin": '', "size": '', "life_span": '', "habitat": ''});
+  const [info, setInfo] = useState([]);
   const [facts, setFacts] = useState([]);
 
   const fetchFactsData = async (sighting) => {
-    const data = await birdDataService.show(`Generate 5 ${sighting.title} facts &facts=array of ${sighting.title} facts`);
+    const data = await birdDataService.showFacts(`Generate 5 ${sighting.title} facts &facts=array of ${sighting.title} facts`);
     if (!data) {
       throw new Error("This feature is currently unavailable. Please try again later.")
     }
@@ -27,20 +27,20 @@ const SightingDetails = (props) => {
   };
 
   const fetchInfoData = async (sighting) => {
-    const data = await birdDataService.show(`Generate information about ${sighting.title} &origin &size &life_span &habitat`);
+    const data = await birdDataService.showInfo(sighting.title);
     if (!data) {
-      throw new Error("This feature is currently unavailable. Please try again later.")
+      throw new Error("Failed to fetch data.")
     }
-    
-    setInfo({ ...data });
+
+    setInfo(data.entities);
   }
 
   useEffect(() => {
     const fetchSighting = async () => {
       const sightingData = await sightingService.show(sightingId);
       setSighting(sightingData);
-      fetchInfoData(sightingData);
       fetchFactsData(sightingData);
+      fetchInfoData(sightingData);
     };
 
     fetchSighting();
@@ -66,12 +66,16 @@ const SightingDetails = (props) => {
     <main className={styles.container}>
       <section>
         <header>
-          <p>{sighting.title.toUpperCase()}</p>
-          <p>Native To: {info.origin}</p>
-          <p>Size: {info.size}</p>
-          <p>Lifespan: {info.life_span}</p>
-          <p>Habitat: {info.habitat}</p>
-          <small>{sighting.category}</small>
+          <h1>{sighting.title.toUpperCase()}</h1>
+          <p>{info[0] ? <i>{info[0].sciName}</i> : 'Loading...'}</p>
+          <h3>{sighting.category}</h3>
+          <small><b>Size:</b> {info[0] ? `${info[0].lengthMin}-${info[0].lengthMax} cm` : 'Loading...'}</small>
+          <small><b>Found in:</b> {info[0]?.region.map((location, index) => (
+              <li key={index}>{location}</li>
+            ))} 
+          </small>
+          <small><b>Conservation status:</b> {info[0] ? info[0].status : 'Loading...'}</small>
+          { info[0]?.images?.[0] && (<img src={info[0].images[0]} alt="Bird image" height="200" width="200" /> )}
           <div>
             <p>
               {`${sighting.author.username} posted on
@@ -86,12 +90,16 @@ const SightingDetails = (props) => {
           </div>
         </header>
         <p>{sighting.text}</p>
-        <h2>Facts about the {sighting.title}</h2>
-        <ul>
-          {facts.map((fact, index) => (
-            <li key={index}>{fact}</li>
-          ))}
-        </ul>
+        {facts?.length > 0 && (
+          <>
+            <h2>Facts about the {sighting.title}</h2>
+            <ul>
+              {facts.map((fact, index) => (
+                <li key={index}>{fact}</li>
+              ))}
+            </ul>
+          </>
+        )}
       </section>
       <section>
         <h2>Comments</h2>
