@@ -35,7 +35,7 @@ const SignInForm = () => {
     <>
       <div className={styles.signInBackground} />
       <main className={styles.signInMain}>
-        <h1 className={styles.signInTitle}>Sign In</h1>
+        <h1 className={styles.signInTitle}>Sign In!</h1>
         <p className={styles.signInMessage}>{message}</p>
         <form className={styles.signInForm} autoComplete="off" onSubmit={handleSubmit}>
           <div className={styles.formGroup}>

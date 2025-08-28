@@ -24,8 +24,8 @@ const Dashboard = () => {
     alert(`Like clicked for sighting ${sightingId}`)
   };
 
-  const handleRating = (sightingId, rating) => {
-    alert(`Rated ${rating} stars for sighting ${sightingId}`);
+  const handleImage = (sightingId) => {
+    alert(`Tag clicked for sighting ${sightingId}`)
   };
 
   const handleImage = (sightingId) => {

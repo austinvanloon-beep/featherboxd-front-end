@@ -20,7 +20,7 @@ FeatherBOXD turns every birdwatching moments into a meaningful discovery. Perfec
 
 ## Live App Link
 
-🔗 [Deployed App on Render](https://featherboxd-backend-bca0bc25d730.herokuapp.com/)
+🔗 [Deployed App on Render](https://featherboxd.netlify.app/)
 
 ---
 

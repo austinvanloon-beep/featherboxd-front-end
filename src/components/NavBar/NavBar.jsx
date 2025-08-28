@@ -16,25 +16,43 @@ const NavBar = () => {
 
   return (
     <nav className={styles.container}>
-      <Link to='/'><img src={Logo} alt='Featherboxd Logo' /></Link>
-      {user ? (
-        <ul>
-          <li><Link to='/'>HOME</Link></li>
-          <li><Link to='/sightings'>SIGHTINGS</Link></li>
-          <li><Link to='/sightings/new'>CREATE NEW</Link></li>
-          <li><Link to='/location-search'>SIGHTINGS BY REGION</Link></li>
-          <li><Link to='/species-search'>SPECIES BY REGION</Link></li>
-          <li><Link to='/' onClick={handleSignOut}>SIGN OUT</Link></li>
-        </ul>
-      ) : (
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/sign-in'>Sign In</Link></li>
-          <li><Link to='/sign-up'>Sign Up</Link></li>
-        </ul>
-      )}
+      {/* Left navigation */}
+      <ul className={styles.navLeft}>
+        <li><Link to='/'>Home</Link></li>
+        {user && (
+          <>
+            <li><Link to='/sightings'>Sightings</Link></li>
+            <li><Link to='/sightings/new'>Create New</Link></li>
+          </>
+        )}
+      </ul>
+
+      {/* Center logo and FeatherBOXD text */}
+      <Link to='/' className={styles.logoGroup}>
+        <img src={Logo} alt='Featherboxd Logo' />
+        <span className={styles.brandName}></span>
+      </Link>
+
+      {/* Right navigation */}
+      <ul className={styles.navRight}>
+        {user ? (
+          <>
+            <li><Link to='/location-search'>By Region</Link></li>
+            <li><Link to='/species-search'>By Species</Link></li>
+            <li><Link to='/' onClick={handleSignOut}>Sign Out</Link></li>
+          </>
+        ) : (
+          <>
+            <li><Link to='/sign-in'>Sign In</Link></li>
+            <li><Link to='/sign-up'>Sign Up</Link></li>
+          </>
+        )}
+      </ul>
     </nav>
   );
 };
 
-export default NavBar; 
+export default NavBar;
+
+
+
