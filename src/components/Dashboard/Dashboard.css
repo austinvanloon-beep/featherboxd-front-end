@@ -1,20 +1,30 @@
-.dashboard-container {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: sans-serif;
+/* Dashboard.css temp */
+
+.dashboard-container p {
+  opacity: 1 !important;
+  text-align: center !important;
+  color: #2c3e50 !important;
+}
+
+.dashboard-container h1,
+.dashboard-container h2,
+.dashboard-container h3,
+.dashboard-container h4,
+.dashboard-container p {
+  margin: 0;
 }
 
 .dashboard-header {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .dashboard-title {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: bold;
   color: #2c3e50;
+  text-align: center;
 }
 
 .bird-title-wrapper {
@@ -31,9 +41,46 @@
 
 .sightings-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   width: 100%;
+}
+
+.sighting-card,
+.sighting-box {
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  margin: 1rem;
+}
+
+.sighting-card:hover,
+.sighting-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.sighting-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.sighting-card p {
+  opacity: 1;
+  text-align: center;
+  font-size: 16px;
+  margin: 0.5rem 0;
 }
 
 .sighting-actions {
@@ -44,33 +91,12 @@
   border-top: 1px solid #ddd;
 }
 
-.sighting-card,
-.sighting-box {
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.5rem;
+
+.dashboard-container .sighting-actions button {
+  background-color: #3498db !important;
+  color: #fff !important;
 }
 
-.sighting-card:hover,
-.sighting-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.sighting-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
 
 .sighting-actions button {
   padding: 0.5rem 1rem;
@@ -86,7 +112,6 @@
   background-color: #2980b9;
 }
 
-
 .sighting-box {
   display: flex;
   align-items: center;
@@ -95,3 +120,25 @@
   font-weight: bold;
   color: #7f8c8d;
 }
+
+.sighting-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.sighting-meta {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.sighting-rating {
+  margin: 0.5rem 0;
+}
+
+.sighting-rating span {
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 4px;
+}
+
