@@ -28,10 +28,6 @@ const Dashboard = () => {
     alert(`Tag clicked for sighting ${sightingId}`)
   };
 
-  const handleImage = (sightingId) => {
-    alert(`Insert URL clicked for sighting ${sightingId}`)
-  }
-
   // fetch sightings
   useEffect(() => {
     const fetchSightings = async () => {
