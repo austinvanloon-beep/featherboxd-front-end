@@ -11,6 +11,7 @@ import SightingDetails from './components/SightingDetails/SightingDetails';
 import SightingForm from './components/SightingForm/SightingForm';
 import CommentForm from './components/CommentForm/CommentForm';
 import BirdSearch from './components/BirdSearch/BirdSearch';
+import SpeciesSearch from './components/SpeciesSearch/SpeciesSearch';
 
 import { UserContext } from './contexts/UserContext';
 
@@ -26,7 +27,7 @@ const App = () => {
   useEffect(() => {
     const fetchAllSightings = async () => {
       const sightingsData = await sightingService.index();
-
+      // console.log(sightingsData);
       setSightings(sightingsData);
     };
 
@@ -79,6 +80,7 @@ const App = () => {
         />
 
         <Route path='/location-search' element={<BirdSearch />} />
+        <Route path='/species-search' element={<SpeciesSearch />} />
         <Route path='/sign-up' element={<SignUpForm />} />
         <Route path='/sign-in' element={<SignInForm />} />
       </Routes>

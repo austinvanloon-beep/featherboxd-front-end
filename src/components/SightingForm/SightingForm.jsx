@@ -19,7 +19,7 @@ const SightingForm = (props) => {
 
     if (sightingId) fetchSighting();
 
-    return () => setFormData({ title: '', text: '', category: 'News' });
+    return () => setFormData({ title: '', text: '', category: 'Other' });
   }, [sightingId]);
 
   const handleChange = (evt) => {
@@ -28,11 +28,11 @@ const SightingForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (sightingId) {
-      props.handleUpdateSighting(sightingId, formData);
-    } else {
+    // if (sightingId) {
+    //   props.handleUpdateSighting(sightingId, formData);
+    // } else {
       props.handleAddSighting(formData);
-    }
+    // }
   };
 
   return (
@@ -66,9 +66,9 @@ const SightingForm = (props) => {
           onChange={handleChange}
         >
           <option value='Waterfowl'>Waterfowl</option>
-          <option value='Perching Bird'>Perching Bird</option>
+          <option value='Perching'>Perching Bird</option>
           <option value='Raptors'>Raptors</option>
-          <option value='Others'>Others'</option>
+          <option value='Other'>Other</option>
           
         </select>
         <button type='submit'>SUBMIT</button>
