@@ -2,13 +2,17 @@ import styles from './SightingDetails.module.css';
 
 import { useParams, Link } from "react-router";
 import { useState, useEffect, useContext } from 'react';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
 
 import CommentForm from "../CommentForm/CommentForm";
 
 import * as sightingService from '../../services/sightingService';
 import * as birdDataService from '../../services/birdDataService';
+import * as mapService from '../../services/mapService';
 
 import { UserContext } from '../../contexts/UserContext';
+
+const MAPS_API_KEY = import.meta.env.VITE_MAPS_API_KEY;
 
 const SightingDetails = (props) => {
   const [sighting, setSighting] = useState(null);
@@ -16,9 +20,10 @@ const SightingDetails = (props) => {
   const { sightingId } = useParams();
   const [info, setInfo] = useState([]);
   const [facts, setFacts] = useState([]);
+  const [coordinates, setCoordinates] = useState(null);
 
   const fetchFactsData = async (sighting) => {
-    const data = await birdDataService.showFacts(`Generate 5 ${sighting.title} facts &facts=array of ${sighting.title} facts`);
+    const data = await birdDataService.showFacts(`Generate 5 ${sighting.title} bird facts &facts=array of ${sighting.title} facts`);
     if (!data) {
       throw new Error("This feature is currently unavailable. Please try again later.")
     }
@@ -41,6 +46,7 @@ const SightingDetails = (props) => {
       setSighting(sightingData);
       fetchFactsData(sightingData);
       fetchInfoData(sightingData);
+      setCoordinates(await mapService.convertLocation(sightingData.location));
     };
 
     fetchSighting();
@@ -63,6 +69,10 @@ const SightingDetails = (props) => {
   if (!sighting) return <main>Loading...</main>;
 
   return (
+    <>
+    <head>
+      <title>Sighting Details</title>
+    </head>
     <main className={styles.container}>
       <section>
         <header>
@@ -93,6 +103,19 @@ const SightingDetails = (props) => {
             )}
           </div>
           <div className={styles.facts}>
+            <p><b>Location:</b> {sighting.location}</p>
+            {coordinates ? (
+              <APIProvider apiKey={MAPS_API_KEY}>
+                <Map
+                  center={coordinates}
+                  zoom={15}
+                  style={{ width: '300px', height: '300px' }}
+                  disableDefaultUI={true}
+                />
+              </APIProvider>
+            ) : (
+              <p>Loading...</p>
+            )}
         {facts && facts.length > 0 ? (
           <>
             <h2>Facts about the {sighting.title}</h2>
@@ -102,7 +125,7 @@ const SightingDetails = (props) => {
               ))}
             </ul>
           </>
-        ) : <p>Unavailable</p>}
+        ) : ''}
         </div>
         </div>
                 </header>
@@ -135,6 +158,7 @@ const SightingDetails = (props) => {
         ))}
       </section>
     </main>
+    </>
   );
 };
 

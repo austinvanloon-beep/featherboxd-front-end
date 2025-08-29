@@ -1,5 +1,5 @@
 const API_KEY = import.meta.env.VITE_API_KEY;
-const NUTHATCH_API_KEY = import.meta.env.NUTHATCH_API_KEY;
+const NUTHATCH_API_KEY = import.meta.env.VITE_NUTHATCH_API_KEY;
 
 const showFacts = async (prompt) => {
     try {
@@ -20,7 +20,7 @@ const showInfo = async (bird) => {
     try {
         const query = `?name=${bird}&pageSize=100`;
         const res = await fetch('https://nuthatch.lastelm.software/v2/birds' + query, {
-            headers: { 'API-Key': '0db08164-1e13-47bf-b340-f1a6fd272905' }
+            headers: { 'API-Key': NUTHATCH_API_KEY }
         });
         if (!res.ok) {
             throw new Error("Failed to fetch data.");
