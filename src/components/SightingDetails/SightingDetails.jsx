@@ -67,8 +67,9 @@ const SightingDetails = (props) => {
       <section>
         <header>
           <h1>{sighting.title.toUpperCase()}</h1>
-          <p>{info[0] ? <i>{info[0].sciName}</i> : 'Loading...'}</p>
-          <h3>{sighting.category}</h3>
+          <div className={styles.details}>
+          <div className={styles.info}>
+          <p id={styles.sciName}>{info[0] ? <i>{info[0].sciName}</i> : 'Loading...'}</p>
           <small><b>Size:</b> {info[0] ? `${info[0].lengthMin}-${info[0].lengthMax} cm` : 'Loading...'}</small>
           <small><b>Found in:</b> {info[0]?.region.map((location, index) => (
               <li key={index}>{location}</li>
@@ -76,21 +77,23 @@ const SightingDetails = (props) => {
           </small>
           <small><b>Conservation status:</b> {info[0] ? info[0].status : 'Loading...'}</small>
           { info[0]?.images?.[0] && (<img src={info[0].images[0]} alt="Bird image" height="200" width="200" /> )}
-          <div>
+          </div>
+          <div className={styles.userInput}>
             <p>
               {`${sighting.author.username} posted on
               ${new Date(sighting.createdAt).toLocaleDateString()}`}
             </p>
+            <p>{sighting.text}</p>
+            <h6>{sighting.category}</h6>
             {sighting.author._id === user._id && (
-              <>
-                <Link to={`/sightings/${sightingId}/edit`}>Edit</Link>
-                <button onClick={() => props.handleDeleteSighting(sightingId)}>Delete</button>
-              </>
+              <div className={styles.button}>
+                <Link to={`/sightings/${sightingId}/edit`} className={styles.editOrDelete}>Edit</Link>
+                <button onClick={() => props.handleDeleteSighting(sightingId)} className={styles.editOrDelete}>Delete</button>
+              </div>
             )}
           </div>
-        </header>
-        <p>{sighting.text}</p>
-        {facts?.length > 0 && (
+          <div className={styles.facts}>
+        {facts && facts.length > 0 ? (
           <>
             <h2>Facts about the {sighting.title}</h2>
             <ul>
@@ -99,9 +102,12 @@ const SightingDetails = (props) => {
               ))}
             </ul>
           </>
-        )}
+        ) : <p>Unavailable</p>}
+        </div>
+        </div>
+                </header>
       </section>
-      <section>
+      <section className={styles.comments}>
         <h2>Comments</h2>
         <CommentForm handleAddComment={handleAddComment} />
         {!sighting.comments.length && <p>There are no comments.</p>}

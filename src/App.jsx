@@ -27,7 +27,6 @@ const App = () => {
   useEffect(() => {
     const fetchAllSightings = async () => {
       const sightingsData = await sightingService.index();
-      // console.log(sightingsData);
       setSightings(sightingsData);
     };
 
