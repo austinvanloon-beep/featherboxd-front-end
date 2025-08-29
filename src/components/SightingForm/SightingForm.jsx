@@ -28,11 +28,11 @@ const SightingForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (sightingId) {
-    //   props.handleUpdateSighting(sightingId, formData);
-    // } else {
+    if (sightingId) {
+      props.handleUpdateSighting(sightingId, formData);
+    } else {
       props.handleAddSighting(formData);
-    // }
+    }
   };
 
   return (
