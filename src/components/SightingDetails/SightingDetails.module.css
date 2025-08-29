@@ -168,6 +168,7 @@
 
 .facts {
   margin-left: 15%;
+  list-style-position: inside;
 }
 
 #sciName {

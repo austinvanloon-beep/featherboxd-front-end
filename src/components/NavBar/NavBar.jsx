@@ -37,8 +37,8 @@ const NavBar = () => {
       <ul className={styles.navRight}>
         {user ? (
           <>
-            <li><Link to='/location-search'>By Region</Link></li>
-            <li><Link to='/species-search'>By Species</Link></li>
+            <li><Link to='/location-search'>External Sightings</Link></li>
+            <li><Link to='/species-search'>Species Search</Link></li>
             <li><Link to='/' onClick={handleSignOut}>Sign Out</Link></li>
           </>
         ) : (
