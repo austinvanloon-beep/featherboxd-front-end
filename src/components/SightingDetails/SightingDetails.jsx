@@ -84,7 +84,7 @@ const SightingDetails = (props) => {
               ${new Date(sighting.createdAt).toLocaleDateString()}`}
             </p>
             <p>{sighting.text}</p>
-            <h6>{sighting.category}</h6>
+            <h5 className={styles[`category-${sighting.category}`]}>{sighting.category}</h5>
             {sighting.author._id === user._id && (
               <div className={styles.button}>
                 <Link to={`/sightings/${sightingId}/edit`} className={styles.editOrDelete}>Edit</Link>
