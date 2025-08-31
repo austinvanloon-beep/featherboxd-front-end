@@ -77,6 +77,10 @@ const App = () => {
           path='/sightings/:sightingId/comments/:commentId/edit'
           element={user ? <CommentForm /> : <SignInForm />} 
         />
+        <Route 
+          path='/dashboard'
+          element={user ? <Dashboard handleDeleteSighting={handleDeleteSighting} /> : <SignInForm />} 
+        />
 
         <Route path='/location-search' element={<BirdSearch />} />
         <Route path='/species-search' element={<SpeciesSearch />} />
