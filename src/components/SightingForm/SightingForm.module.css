@@ -5,11 +5,11 @@
   box-sizing: border-box;
 }
 
-.signUpMain {
+.sightingMain {
   min-height: 100vh;
-  background-image: url('https://images.unsplash.com/photo-1589258978040-b2904709b20a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-image: url('https://images.unsplash.com/photo-1449023859676-22e61b0c0695?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;
-  background-position: top center;
+  background-position: center;
   background-repeat: no-repeat;
 
   display: flex;
@@ -17,12 +17,17 @@
   align-items: center;
   justify-content: center;
 
+  padding: 0rem;
+  overflow-x: hidden;
+  position: relative;
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Form Wrapper - No blur, solid background */
-.signUpForm {
-  background: rgba(255, 255, 255, 0.95);
+/* Frosted Glass Effect */
+.sightingFormWrapper {
+  background: rgba(255, 255, 255, 0.85); 
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-radius: 30px;
   padding: 60px 40px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
@@ -32,22 +37,31 @@
 }
 
 /* Title */
-.signUpTitle {
+.sightingTitle {
   font-size: 2.5rem;
-  color: #ffffff;
+  color: #111827;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* Message below title */
-.signUpMessage {
-  color: #374151;
+/* Subtitle */
+.sightingMessage {
+  color: #1f2937;
   font-size: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-/* Form group */
+/* Form Base */
+.sightingForm {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Form Groups */
 .formGroup {
   margin-bottom: 1.5rem;
   display: flex;
@@ -55,20 +69,27 @@
   text-align: left;
 }
 
-/* Label */
+/* Label Styling */
 .label {
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #1e293b;
 }
 
-/* Inputs */
+/* Input / Select / Textarea Shared */
 .input {
   padding: 12px 16px;
   border-radius: 10px;
   border: 1px solid #cbd5e1;
   font-size: 1rem;
+  background: white;
   transition: border 0.3s ease;
+  width: 100%;
+  resize: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-clip: padding-box;
 }
 
 .input:focus {
@@ -77,16 +98,15 @@
   box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
 }
 
-/* Button styles */
+/* Button Group */
 .buttonGroup {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: center;
   margin-top: 1rem;
 }
 
+/* Button Base */
 .button {
-  flex: 1;
   padding: 12px 16px;
   font-weight: 600;
   font-size: 1rem;
@@ -96,24 +116,14 @@
   transition: all 0.3s ease;
 }
 
+/* Submit Button */
 .primaryBtn {
   background: linear-gradient(90deg, #34d399, #10b981);
   color: white;
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  width: 100%;
 }
 
 .primaryBtn:hover {
   background: linear-gradient(90deg, #10b981, #059669);
 }
-
-.secondaryBtn {
-  background-color: white;
-  color: #10b981;
-  border: 2px solid #10b981;
-}
-
-.secondaryBtn:hover {
-  background-color: #ecfdf5;
-}
-
-

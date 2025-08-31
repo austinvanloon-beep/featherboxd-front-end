@@ -9,11 +9,19 @@ const Dashboard = ({ handleDeleteSighting }) => {
   const { user } = useContext(UserContext);
   const [sightings, setSightings] = useState([]);
 
-
   const handleLike = (sightingId) => {
-    alert(`Like clicked for sighting ${sightingId}`)
+    alert(`Like clicked for sighting ${sightingId}`);
   };
 
+  const handleDelete = async (sightingId) => {
+  if (!window.confirm('Are you sure you want to delete this sighting?')) return;
+  try {
+    await sightingService.deleteSighting(sightingId);
+    setSightings(sightings.filter(s => s._id !== sightingId));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   useEffect(() => {
     const fetchSightings = async () => {
@@ -26,7 +34,6 @@ const Dashboard = ({ handleDeleteSighting }) => {
     };
     if (user) fetchSightings();
   }, [user]);
-
 
 return (
   <main className="dashboard-container">
@@ -53,6 +60,7 @@ return (
             >
               <p><b>{sighting.title.toUpperCase()}</b></p>
               <img src={sighting.image ? sighting.image : "https://i.imgur.com/YsLYeEI.jpeg"} alt={sighting.title} />
+
               <div className="sighting-actions">
                 <button
                   onClick={(e) => {
@@ -70,16 +78,22 @@ return (
                 >
                   {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
                 </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (window.confirm('Are you sure you want to delete this sighting?')) {
-                      handleDeleteSighting(sighting._id);
-                    }
-                  }}
-                >
-                  Delete
-                </button>
+              <button
+                onClick={async () => {
+                  const confirmed = window.confirm('Are you sure you want to delete this sighting?');
+                  if (!confirmed) return;
+
+                  try {
+                    await sightingService.deleteSighting(sighting._id);
+                    navigate('/sightings');
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }}
+              >
+                Delete
+              </button>
+
               </div>
             </div>
           ) : '' ))
