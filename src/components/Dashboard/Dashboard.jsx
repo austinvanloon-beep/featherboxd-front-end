@@ -68,6 +68,11 @@ const Dashboard = ({ handleDeleteSighting }) => {
                 >
                   Edit
                 </button>
+                <button
+                  onClick={() => handleLike(sighting._id)}
+                >
+                  {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
+                </button>
               <button
                 onClick={async () => {
                   const confirmed = window.confirm('Are you sure you want to delete this sighting?');
