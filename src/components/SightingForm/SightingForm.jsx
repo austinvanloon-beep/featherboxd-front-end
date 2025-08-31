@@ -61,7 +61,7 @@ const SightingForm = (props) => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor='text-input' className={styles.label}>Text</label>
+            <label htmlFor='text-input' className={styles.label}>Description</label>
             <textarea
               required
               name='text'
