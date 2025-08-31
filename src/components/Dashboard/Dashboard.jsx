@@ -5,34 +5,15 @@ import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
 
-const Dashboard = () => {
+const Dashboard = ({ handleDeleteSighting }) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [sightings, setSightings] = useState([]);
-  const [selectedSighting, setSelectedSighting] = useState(null);
-  const [favorites, setFavorites] = useState([]); 
-
-  const handleComment = (sightingId) => {
-    alert(`Comment clicked for sighting ${sightingId}`);
-  };
-
-  const handleTag = (sightingId) => {
-    alert(`Tag clicked for sighting ${sightingId}`);
-  };
 
   const handleLike = (sightingId) => {
     alert(`Like clicked for sighting ${sightingId}`)
   };
 
-  const handleRating = (sightingId, rating) => {
-    alert(`Rated ${rating} stars for sighting ${sightingId}`);
-  };
-
-  const handleImage = (sightingId) => {
-    alert(`Insert URL clicked for sighting ${sightingId}`)
-  }
-
-  // fetch sightings
   useEffect(() => {
     const fetchSightings = async () => {
       try {
@@ -46,8 +27,6 @@ const Dashboard = () => {
   }, [user]);
 
 
-
-  // dashboard grid
 return (
   <main className="dashboard-container">
     <div className="dashboard-header">
@@ -59,52 +38,50 @@ return (
     </div>
 
     <div className="sightings-grid">
-      {sightings.length > 0 ? (
-        sightings.map((sighting) => (
-          <div
-            key={sighting._id}
-            className="sighting-card"
-            onClick={() => navigate(`/sightings/${sighting._id}`)}
-          >
-            <img src={sighting.imageUrl} alt={sighting.title} />
-
-            <div className="sighting-actions">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/sightings/${sighting._id}/edit`);
-                }}
-              >
-                Edit
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleLike(sighting._id);
-                }}
-              >
-                {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (window.confirm('Are you sure you want to delete this sighting?')) {
-                    handleDeleteSighting(sighting._id);
-                  }
-                }}
-              >
-                Delete
-              </button>
+        {!props.sightings.reduce((userSightings, sighting) => {return sighting.author.username === user.username ? userSightings + 1 : userSightings}, 0) ? (
+          <p>You have no sightings.</p>
+          ) : (
+            sightings.map((sighting) => (
+            sighting.author.username === user.username ? (
+            <div
+              key={sighting._id}
+              className="sighting-card"
+              onClick={() => navigate(`/sightings/${sighting._id}`)}
+            >
+              <p><b>{sighting.title.toUpperCase()}</b></p>
+              <img src={sighting.image ? sighting.image : "https://i.imgur.com/YsLYeEI.jpeg"} alt={sighting.title} />
+              <div className="sighting-actions">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/sightings/${sighting._id}/edit`);
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLike(sighting._id);
+                  }}
+                >
+                  {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (window.confirm('Are you sure you want to delete this sighting?')) {
+                      handleDeleteSighting(sighting._id);
+                    }
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))
-      ) : (
-        <>
-          <div className="sighting-box">Sighting 1</div>
-          <div className="sighting-box">Sighting 2</div>
-          <div className="sighting-box">Sighting 3</div>
-        </>
-      )}
+          ) : '' ))
+        )
+      }
     </div>
   </main>
 );

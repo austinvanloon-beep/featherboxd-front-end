@@ -66,6 +66,15 @@ const SightingForm = (props) => {
           value={formData.location}
           onChange={handleChange}
         />
+        <label htmlFor='image-input'>Image</label>
+        <input
+          type='text'
+          name='image'
+          id='image-input'
+          value={formData.image}
+          onChange={handleChange}
+          pattern='https?://.*\.(png|jpg|jpeg|gif)'
+        />
         <label htmlFor='category-input'>Category</label>
         <select
           required

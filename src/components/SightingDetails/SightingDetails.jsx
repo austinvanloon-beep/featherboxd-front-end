@@ -93,12 +93,13 @@ const SightingDetails = (props) => {
               {`${sighting.author.username} posted on
               ${new Date(sighting.createdAt).toLocaleDateString()}`}
             </p>
+            <img src={sighting.image ? sighting.image : "https://i.imgur.com/YsLYeEI.jpeg"} alt={sighting.title} height="300" width="300" />
             <p>{sighting.text}</p>
             <h5 className={styles[`category-${sighting.category}`]}>{sighting.category}</h5>
             {sighting.author._id === user._id && (
               <div className={styles.button}>
                 <Link to={`/sightings/${sightingId}/edit`} className={styles.editOrDelete}>Edit</Link>
-                <button onClick={() => props.handleDeleteSighting(sightingId)} className={styles.editOrDelete}>Delete</button>
+                <button onClick={() => {if (window.confirm('Are you sure you want to delete this sighting?')) {props.handleDeleteSighting(sightingId)}}} className={styles.editOrDelete}>Delete</button>
               </div>
             )}
           </div>
