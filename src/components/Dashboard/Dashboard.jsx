@@ -1,10 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [sightings, setSightings] = useState([]);
   const [selectedSighting, setSelectedSighting] = useState(null);
@@ -44,38 +46,12 @@ const Dashboard = () => {
   }, [user]);
 
 
-  // this return handles detail page ( user clicks sighting from dashboard )
-  if (selectedSighting) {
-    return (
-      <main className="dashboard-container">
-        <button onClick={() => setSelectedSighting(null)}>Back to Dashboard</button>
-        <div className="sighting-details">
-          <h2>{selectedSighting.title}</h2>
-          <img
-            src={selectedSighting.imageUrl}
-            alt={selectedSighting.title}
-            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover', borderRadius: '8px' }}
-          />
-          <p>{selectedSighting.text}</p>
 
-          <div className="sighting-actions">
-            <button onClick={() => handleTag(selectedSighting._id)}>Tag</button>
-            <button onClick={() => handleLike(selectedSighting._id)}>Like</button>
-            <button onClick={() => handleImage(selectedSighting._id)}>Insert URL</button>
-            <button onClick={() => handleFavorite(selectedSighting._id)}>
-              {favorites.includes(selectedSighting._id) ? '♥' : '♡'}
-            </button>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
-  // this return handles interactions on users dashboard
+  // dashboard grid
   return (
     <main className="dashboard-container">
       <div className="dashboard-header">
-        <h1 className="dashboard-title">Welcome, {user.username}</h1>
+        <h1 className="dashboard-title">Welcome, {user.username}.</h1>
       </div>
 
       <div className="bird-title-wrapper">
@@ -88,7 +64,7 @@ const Dashboard = () => {
             <div
               key={sighting._id}
               className="sighting-card"
-              onClick={() => setSelectedSighting(sighting)}
+              onClick={() => navigate(`/sightings/${sighting._id}`)}
             >
               <img src={sighting.imageUrl} alt={sighting.title} />
 
