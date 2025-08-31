@@ -21,7 +21,7 @@
 }
 
 .signUpMessage {
-  color: red;
+  color: rgb(255, 255, 255);
   font-size: 0.95rem;
   margin-bottom: 1rem;
   text-align: center;
@@ -58,7 +58,7 @@
 }
 
 .input:focus {
-  border-color: #2563eb;
+  border-color: #10b981;
   outline: none;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
@@ -80,12 +80,12 @@
 }
 
 .primaryBtn {
-  background-color: #2563eb;
+  background-color: #10b981;
   color: white;
 }
 
 .primaryBtn:hover {
-  background-color: #1d4ed8;
+  background-color: #36e2a9;
 }
 
 .secondaryBtn {

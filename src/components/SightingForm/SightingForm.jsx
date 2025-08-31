@@ -28,18 +28,18 @@ const SightingForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (sightingId) {
-    //   props.handleUpdateSighting(sightingId, formData);
-    // } else {
+    if (sightingId) {
+      props.handleUpdateSighting(sightingId, formData);
+    } else {
       props.handleAddSighting(formData);
-    // }
+    }
   };
 
   return (
     <main>
       <h1>{sightingId ? 'Edit Sighting' : 'New Sighting'}</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='title-input'>Title</label>
+        <label htmlFor='title-input'>Name</label>
         <input
           required
           type='text'
@@ -55,6 +55,15 @@ const SightingForm = (props) => {
           name='text'
           id='text-input'
           value={formData.text}
+          onChange={handleChange}
+        />
+        <label htmlFor='location-input'>Location</label>
+        <input 
+          required
+          type='text'
+          name='location'
+          id='location-input'
+          value={formData.location}
           onChange={handleChange}
         />
         <label htmlFor='category-input'>Category</label>

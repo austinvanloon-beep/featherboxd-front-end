@@ -19,21 +19,16 @@ const Dashboard = () => {
   };
 
   const handleLike = (sightingId) => {
-    alert(`Like clicked for sighting ${sightingId}`);
+    alert(`Like clicked for sighting ${sightingId}`)
+  };
+
+  const handleRating = (sightingId, rating) => {
+    alert(`Rated ${rating} stars for sighting ${sightingId}`);
   };
 
   const handleImage = (sightingId) => {
-    alert(`Insert URL clicked for sighting ${sightingId}`);
-  };
-
-  const handleFavorite = (sightingId) => {
-    setFavorites((prev) =>
-      prev.includes(sightingId)
-        ? prev.filter((id) => id !== sightingId)
-        : [...prev, sightingId]
-    );
-  };
-
+    alert(`Insert URL clicked for sighting ${sightingId}`)
+  }
 
   // fetch sightings
   useEffect(() => {
