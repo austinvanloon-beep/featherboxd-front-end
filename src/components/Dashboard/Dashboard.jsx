@@ -48,72 +48,65 @@ const Dashboard = () => {
 
 
   // dashboard grid
-  return (
-    <main className="dashboard-container">
-      <div className="dashboard-header">
-        <h1 className="dashboard-title">Welcome, {user.username}.</h1>
-      </div>
+return (
+  <main className="dashboard-container">
+    <div className="dashboard-header">
+      <h1 className="dashboard-title">Welcome, {user.username}.</h1>
+    </div>
 
-      <div className="bird-title-wrapper">
-        <h2 className="bird-title">Here are your sightings:</h2>
-      </div>
+    <div className="bird-title-wrapper">
+      <h2 className="bird-title">Here are your sightings:</h2>
+    </div>
 
-      <div className="sightings-grid">
-        {sightings.length > 0 ? (
-          sightings.map((sighting) => (
-            <div
-              key={sighting._id}
-              className="sighting-card"
-              onClick={() => navigate(`/sightings/${sighting._id}`)}
-            >
-              <img src={sighting.imageUrl} alt={sighting.title} />
+    <div className="sightings-grid">
+      {sightings.length > 0 ? (
+        sightings.map((sighting) => (
+          <div
+            key={sighting._id}
+            className="sighting-card"
+            onClick={() => navigate(`/sightings/${sighting._id}`)}
+          >
+            <img src={sighting.imageUrl} alt={sighting.title} />
 
-              <div className="sighting-actions">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleTag(sighting._id);
-                  }}
-                >
-                  Tag
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLike(sighting._id);
-                  }}
-                >
-                  Like
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleImage(sighting._id);
-                  }}
-                >
-                  Insert URL
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleFavorite(sighting._id);
-                  }}
-                >
-                  {favorites.includes(sighting._id) ? '♥' : '♡'}
-                </button>
-              </div>
+            <div className="sighting-actions">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/sightings/${sighting._id}/edit`);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLike(sighting._id);
+                }}
+              >
+                {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (window.confirm('Are you sure you want to delete this sighting?')) {
+                    handleDeleteSighting(sighting._id);
+                  }
+                }}
+              >
+                Delete
+              </button>
             </div>
-          ))
-        ) : (
-          <>
-            <div className="sighting-box">Sighting 1</div>
-            <div className="sighting-box">Sighting 2</div>
-            <div className="sighting-box">Sighting 3</div>
-          </>
-        )}
-      </div>
-    </main>
-  );
-};
-
+          </div>
+        ))
+      ) : (
+        <>
+          <div className="sighting-box">Sighting 1</div>
+          <div className="sighting-box">Sighting 2</div>
+          <div className="sighting-box">Sighting 3</div>
+        </>
+      )}
+    </div>
+  </main>
+);
+}
 export default Dashboard;
