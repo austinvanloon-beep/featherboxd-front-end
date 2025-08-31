@@ -23,7 +23,6 @@ const Dashboard = ({ handleDeleteSighting }) => {
   }
 };
 
-  // fetch sightings
   useEffect(() => {
     const fetchSightings = async () => {
       try {
@@ -36,28 +35,31 @@ const Dashboard = ({ handleDeleteSighting }) => {
     if (user) fetchSightings();
   }, [user]);
 
+return (
+  <main className="dashboard-container">
+    <div className="dashboard-header">
+      <h1 className="dashboard-title">Welcome, {user.username}.</h1>
+    </div>
 
 
-  // main dashboard grid
-  return (
-    <main className="dashboard-container">
-      <div className="dashboard-header">
-        <h1 className="dashboard-title">Welcome, {user.username}.</h1>
-      </div>
+    <div className="bird-title-wrapper">
+      <h2 className="bird-title">Here are your sightings:</h2>
+    </div>
 
-      <div className="bird-title-wrapper">
-        <h2 className="bird-title">Here are your sightings:</h2>
-      </div>
 
-      <div className="sightings-grid">
-        {sightings.length > 0 ? (
-          sightings.map((sighting) => (
+    <div className="sightings-grid">
+        {!sightings.reduce((userSightings, sighting) => {return sighting.author.username === user.username ? userSightings + 1 : userSightings}, 0) ? (
+          <p>You have no sightings.</p>
+          ) : (
+            sightings.map((sighting) => (
+            sighting.author.username === user.username ? (
             <div
               key={sighting._id}
               className="sighting-card"
               onClick={() => navigate(`/sightings/${sighting._id}`)}
             >
-              <img src={sighting.imageUrl} alt={sighting.title} />
+              <p><b>{sighting.title.toUpperCase()}</b></p>
+              <img src={sighting.image ? sighting.image : "https://i.imgur.com/YsLYeEI.jpeg"} alt={sighting.title} />
 
               <div className="sighting-actions">
                 <button
@@ -69,7 +71,10 @@ const Dashboard = ({ handleDeleteSighting }) => {
                   Edit
                 </button>
                 <button
-                  onClick={() => handleLike(sighting._id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLike(sighting._id);
+                  }}
                 >
                   {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
                 </button>
@@ -91,17 +96,11 @@ const Dashboard = ({ handleDeleteSighting }) => {
 
               </div>
             </div>
-          ))
-        ) : (
-          <>
-            <div className="sighting-box">Sighting 1</div>
-            <div className="sighting-box">Sighting 2</div>
-            <div className="sighting-box">Sighting 3</div>
-          </>
-        )}
-      </div>
-    </main>
-  );
-};
-
+          ) : '' ))
+        )
+      }
+    </div>
+  </main>
+);
+}
 export default Dashboard;
