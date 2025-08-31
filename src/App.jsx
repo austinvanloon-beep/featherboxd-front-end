@@ -55,27 +55,26 @@ const App = () => {
     <>
       <NavBar />
       <Routes>
-        <Route path='/' element={user ? <Dashboard /> : <Landing />} />
-
-        <Route 
-          path='/sightings' 
-          element={user ? <SightingList sightings={sightings}/> : <SignInForm />} 
+        <Route path='/' element={user ? <Dashboard handleDeleteSighting={handleDeleteSighting} /> : <Landing />} />
+        <Route
+          path='/sightings'
+          element={user ? <SightingList sightings={sightings}/> : <SignInForm />}
         />
-        <Route 
+        <Route
           path='/sightings/:sightingId'
-          element={user ? <SightingDetails handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />} 
+          element={user ? <SightingDetails handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />}
         />
-        <Route 
-          path='/sightings/new' 
-          element={user ? <SightingForm handleAddSighting={handleAddSighting} /> : <SignInForm />} 
+        <Route
+          path='/sightings/new'
+          element={user ? <SightingForm handleAddSighting={handleAddSighting} /> : <SignInForm />}
         />
         <Route
           path='/sightings/:sightingId/edit'
-          element={user ? <SightingForm handleUpdateSighting={handleUpdateSighting} /> : <SignInForm />} 
+          element={user ? <SightingForm handleUpdateSighting={handleUpdateSighting} /> : <SignInForm />}
         />
         <Route
           path='/sightings/:sightingId/comments/:commentId/edit'
-          element={user ? <CommentForm /> : <SignInForm />} 
+          element={user ? <CommentForm /> : <SignInForm />}
         />
 
         <Route path='/location-search' element={<BirdSearch />} />
@@ -88,4 +87,3 @@ const App = () => {
 };
 
 export default App;
-

@@ -58,13 +58,22 @@ const SightingForm = (props) => {
           onChange={handleChange}
         />
         <label htmlFor='location-input'>Location</label>
-        <input 
+        <input
           required
           type='text'
           name='location'
           id='location-input'
           value={formData.location}
           onChange={handleChange}
+        />
+        <label htmlFor='image-input'>Image</label>
+        <input
+          type='text'
+          name='image'
+          id='image-input'
+          value={formData.image}
+          onChange={handleChange}
+          pattern='https?://.*\.(png|jpg|jpeg|gif)'
         />
         <label htmlFor='category-input'>Category</label>
         <select
@@ -78,7 +87,6 @@ const SightingForm = (props) => {
           <option value='Perching'>Perching Bird</option>
           <option value='Raptors'>Raptors</option>
           <option value='Other'>Other</option>
-          
         </select>
         <button type='submit'>SUBMIT</button>
       </form>
@@ -87,4 +95,3 @@ const SightingForm = (props) => {
 };
 
 export default SightingForm;
-
