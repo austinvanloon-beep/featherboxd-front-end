@@ -1,0 +1,125 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sightingMain {
+  min-height: 100vh;
+  background-image: url('https://plus.unsplash.com/premium_photo-1728659148626-2a1e9356b3b6?q=80&w=1207&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Form Container */
+.sightingFormWrapper {
+  background: #ffffff; /* solid white */
+  border-radius: 30px;
+  padding: 60px 40px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Title */
+.sightingTitle {
+  font-size: 2.5rem;
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Subtitle */
+.sightingMessage {
+  color: #374151;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Form Base */
+.sightingForm {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Form Groups */
+.formGroup {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Label Styling */
+.label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+/* Input / Select / Textarea Shared */
+.input {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  background: white;
+  transition: border 0.3s ease;
+  width: 100%;
+  resize: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-clip: padding-box;
+}
+
+.input:focus {
+  border-color: #10b981;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+/* Button Group */
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Button Base */
+.button {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Submit Button */
+.primaryBtn {
+  background: linear-gradient(90deg, #34d399, #10b981);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  width: 100%;
+}
+
+.primaryBtn:hover {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
