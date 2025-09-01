@@ -4,7 +4,7 @@ import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
-const Dashboard = ({ handleDeleteSighting }) => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [sightings, setSightings] = useState([]);
@@ -12,16 +12,6 @@ const Dashboard = ({ handleDeleteSighting }) => {
   const handleLike = (sightingId) => {
     alert(`Like clicked for sighting ${sightingId}`);
   };
-
-  const handleDelete = async (sightingId) => {
-  if (!window.confirm('Are you sure you want to delete this sighting?')) return;
-  try {
-    await sightingService.deleteSighting(sightingId);
-    setSightings(sightings.filter(s => s._id !== sightingId));
-  } catch (err) {
-    console.error(err);
-  }
-};
 
   useEffect(() => {
     const fetchSightings = async () => {

@@ -101,6 +101,7 @@ const SightingDetails = (props) => {
                 <button onClick={() => {if (window.confirm('Are you sure you want to delete this sighting?')) {props.handleDeleteSighting(sightingId)}}} className={styles.editOrDelete}>Delete</button>
               </div>
             )}
+            <button>{sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}</button>
           </div>
           <div className={styles.facts}>
             <p><b>Location:</b> {sighting.location}</p>
