@@ -4,39 +4,37 @@ import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
-const Dashboard = ({ handleDeleteSighting }) => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [sightings, setSightings] = useState([]);
 
-  const handleLike = (sightingId) => {
-    alert(`Like clicked for sighting ${sightingId}`);
+  // fetch sightings
+  const fetchSightings = async () => {
+    try {
+      const fetchedSightings = await sightingService.index();
+      setSightings(fetchedSightings);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
+  
+  // delete button
   const handleDelete = async (sightingId) => {
-  if (!window.confirm('Are you sure you want to delete this sighting?')) return;
-  try {
-    await sightingService.deleteSighting(sightingId);
-    setSightings(sightings.filter(s => s._id !== sightingId));
-  } catch (err) {
-    console.error(err);
-  }
-};
+    if (!window.confirm('Are you sure you want to delete this sighting?')) return;
+    try {
+      await sightingService.deleteSighting(sightingId);
+      setSightings((prev) => prev.filter((s) => s._id !== sightingId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  // fetch sightings
+  // load sightings on mount
   useEffect(() => {
-    const fetchSightings = async () => {
-      try {
-        const fetchedSightings = await sightingService.index();
-        setSightings(fetchedSightings);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     if (user) fetchSightings();
   }, [user]);
-
-
 
   // main dashboard grid
   return (
@@ -60,6 +58,7 @@ const Dashboard = ({ handleDeleteSighting }) => {
               <img src={sighting.imageUrl} alt={sighting.title} />
 
               <div className="sighting-actions">
+                {/* edit button */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -68,27 +67,27 @@ const Dashboard = ({ handleDeleteSighting }) => {
                 >
                   Edit
                 </button>
+
+                {/* like button */}
                 <button
-                  onClick={() => handleLike(sighting._id)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleLike(sighting._id);
+                  }}
                 >
-                  {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}
+                  {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}{' '}
+                  {sighting.likes ? sighting.likes.length : 0}
                 </button>
-              <button
-                onClick={async () => {
-                  const confirmed = window.confirm('Are you sure you want to delete this sighting?');
-                  if (!confirmed) return;
 
-                  try {
-                    await sightingService.deleteSighting(sighting._id);
-                    navigate('/sightings');
-                  } catch (err) {
-                    console.error(err);
-                  }
-                }}
-              >
-                Delete
-              </button>
-
+                {/* delete button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(sighting._id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))
