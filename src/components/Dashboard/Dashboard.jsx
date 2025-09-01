@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { FaHeart, FaRegHeart, FaEdit } from 'react-icons/fa';
 import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
@@ -63,10 +64,14 @@ const Dashboard = () => {
     );
   };
 
+  if (!user) {
+    return <p style={{ textAlign: 'center' }}>Please log in to view your sightings.</p>;
+  }
+
   return (
     <main className="dashboard-container">
       <header className="dashboard-header">
-        <h1 className="dashboard-title">Welcome, {user.username}</h1>
+        <h1 className="dashboard-title">Welcome, {user.username}.</h1>
       </header>
 
       <section className="bird-title-wrapper">
@@ -105,6 +110,8 @@ const Dashboard = () => {
                   alt={sighting.title}
                   className="sighting-image"
                 />
+
+                {/* Like & Edit Actions */}
                 <div className="sighting-actions">
                   <div className="like-wrapper">
                     <button
@@ -116,7 +123,7 @@ const Dashboard = () => {
                       type="button"
                       className="like-button"
                     >
-                      {userHasLiked ? '♥' : '♡'}
+                      {userHasLiked ? <FaHeart /> : <FaRegHeart />}
                     </button>
                     <span className="like-count">{likesCount}</span>
                   </div>
@@ -130,11 +137,12 @@ const Dashboard = () => {
                     aria-label="Edit sighting"
                     type="button"
                   >
-                    ✎
+                    <FaEdit />
                   </button>
                 </div>
 
-                <p><b>{sighting.title.toUpperCase()}</b></p>
+                {/* Title Overlay */}
+                <p>{sighting.title.toUpperCase()}</p>
               </article>
             );
           })}
@@ -145,6 +153,8 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
 
 
 

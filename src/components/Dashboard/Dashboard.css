@@ -97,6 +97,13 @@
   position: relative;
 }
 
+.sighting-actions button svg {
+  color: white;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
 /* Hover effect */
 .sighting-card:hover {
   transform: translateY(-5px);
@@ -127,6 +134,8 @@
   z-index: 2;
   max-width: 90%;
   word-wrap: break-word;
+  text-transform: uppercase;
+  color: #2c3e50;
 }
 
 /* Actions (like button, like count, edit button) */
