@@ -30,6 +30,7 @@ const SpeciesSearch = () => {
     return (
         <>
             <h1>Species Search by Region</h1>
+            <h3>Want to know what birds to look for in your region? Search here!</h3>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="region">Select a region:</label>
                 <select onChange={(event => setRegion(event.target.value))}>
