@@ -10,6 +10,7 @@ const SightingForm = (props) => {
     text: '',
     location: '',
     category: 'Other',
+    image: '',  // Changed from imageUrl to image
   });
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const SightingForm = (props) => {
     if (sightingId) fetchSighting();
 
     return () =>
-      setFormData({ title: '', text: '', location: '', category: 'Other' });
+      setFormData({ title: '', text: '', location: '', category: 'Other', image: '' });
   }, [sightingId]);
 
   const handleChange = (evt) => {
@@ -61,7 +62,7 @@ const SightingForm = (props) => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor='text-input' className={styles.label}>Description</label>
+            <label htmlFor='text-input' className={styles.label}>Text</label>
             <textarea
               required
               name='text'
@@ -103,6 +104,20 @@ const SightingForm = (props) => {
             </select>
           </div>
 
+          {/* Image URL input with 'image' as name */}
+          <div className={styles.formGroup}>
+            <label htmlFor='image-input' className={styles.label}>Image URL</label>
+            <input
+              type='url'
+              name='image'
+              id='image-input'
+              className={styles.input}
+              value={formData.image}
+              onChange={handleChange}
+              placeholder='https://example.com/image.jpg'
+            />
+          </div>
+
           <div className={styles.buttonGroup}>
             <button type='submit' className={`${styles.button} ${styles.primaryBtn}`}>
               Submit
@@ -115,6 +130,8 @@ const SightingForm = (props) => {
 };
 
 export default SightingForm;
+
+
 
 
 
