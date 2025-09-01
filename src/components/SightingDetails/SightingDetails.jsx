@@ -1,16 +1,17 @@
-import styles from './SightingDetails.module.css';
-
 import { useParams, Link } from "react-router";
-import { useState, useEffect, useContext } from 'react';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import { useState, useEffect, useContext } from "react";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 import CommentForm from "../CommentForm/CommentForm";
 
-import * as sightingService from '../../services/sightingService';
-import * as birdDataService from '../../services/birdDataService';
-import * as mapService from '../../services/mapService';
+import * as sightingService from "../../services/sightingService";
+import * as birdDataService from "../../services/birdDataService";
+import * as mapService from "../../services/mapService";
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from "../../contexts/UserContext";
+
+import styles from "./SightingDetails.module.css";
 
 const MAPS_API_KEY = import.meta.env.VITE_MAPS_API_KEY;
 
@@ -23,22 +24,16 @@ const SightingDetails = (props) => {
   const [coordinates, setCoordinates] = useState(null);
 
   const fetchFactsData = async (sighting) => {
-    const data = await birdDataService.showFacts(`Generate 5 ${sighting.title} bird facts &facts=array of ${sighting.title} facts`);
-    if (!data) {
-      throw new Error("This feature is currently unavailable. Please try again later.")
-    }
-
-    setFacts(data.facts);
+    const data = await birdDataService.showFacts(
+      `Generate 5 ${sighting.title} bird facts &facts=array of ${sighting.title} facts`
+    );
+    if (data?.facts) setFacts(data.facts);
   };
 
   const fetchInfoData = async (sighting) => {
     const data = await birdDataService.showInfo(sighting.title);
-    if (!data) {
-      throw new Error("Failed to fetch data.")
-    }
-
-    setInfo(data.entities);
-  }
+    if (data?.entities) setInfo(data.entities);
+  };
 
   useEffect(() => {
     const fetchSighting = async () => {
@@ -65,102 +60,162 @@ const SightingDetails = (props) => {
     });
   };
 
-  if (!sighting) return <main>Loading...</main>;
+  if (!sighting) return <main className={styles.loading}>Loading...</main>;
+
+  const bird = info[0];
 
   return (
-    <>
-    <head>
-      <title>Sighting Details</title>
-    </head>
     <main className={styles.container}>
-      <section>
-        <header>
-          <h1>{sighting.title.toUpperCase()}</h1>
-          <div className={styles.details}>
-          <div className={styles.info}>
-          <p id={styles.sciName}>{info[0] ? <i>{info[0].sciName}</i> : 'Loading...'}</p>
-          <small><b>Size:</b> {info[0] ? `${info[0].lengthMin}-${info[0].lengthMax} cm` : 'Loading...'}</small>
-          <small><b>Found in:</b> {info[0]?.region.map((location, index) => (
-              <li key={index}>{location}</li>
-            ))}
-          </small>
-          <small><b>Conservation status:</b> {info[0] ? info[0].status : 'Loading...'}</small>
-          { info[0]?.images?.[0] && (<img src={info[0].images[0]} alt="Bird image" height="200" width="200" /> )}
-          </div>
-          <div className={styles.userInput}>
+      <h1 className={styles.title}>{sighting.title.toUpperCase()}</h1>
+
+      <div className={styles.content}>
+        {/* LEFT COLUMN */}
+        <div className={styles.leftColumn}>
+          <div className={styles.mapSection}>
+            <h2>Map</h2>
             <p>
-              {`${sighting.author.username} posted on
-              ${new Date(sighting.createdAt).toLocaleDateString()}`}
+              <b>Location:</b> {sighting.location}
             </p>
-            <img src={sighting.image ? sighting.image : "https://i.imgur.com/YsLYeEI.jpeg"} alt={sighting.title} height="300" width="300" />
-            <p>{sighting.text}</p>
-            <h5 className={styles[`category-${sighting.category}`]}>{sighting.category}</h5>
-            {sighting.author._id === user._id && (
-              <div className={styles.button}>
-                <Link to={`/sightings/${sightingId}/edit`} className={styles.editOrDelete}>Edit</Link>
-                <button onClick={() => {if (window.confirm('Are you sure you want to delete this sighting?')) {props.handleDeleteSighting(sightingId)}}} className={styles.editOrDelete}>Delete</button>
-              </div>
-            )}
-            <button>{sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}</button>
-          </div>
-          <div className={styles.facts}>
-            <p><b>Location:</b> {sighting.location}</p>
             {coordinates ? (
               <APIProvider apiKey={MAPS_API_KEY}>
                 <Map
                   center={coordinates}
                   zoom={15}
-                  style={{ width: '300px', height: '300px' }}
+                  style={{ width: "100%", height: "300px" }}
                   disableDefaultUI={true}
                 />
               </APIProvider>
             ) : (
-              <p>Loading...</p>
+              <p>Loading map...</p>
             )}
-        {facts && facts.length > 0 ? (
-          <>
-            <h2>Facts about the {sighting.title}</h2>
-            <ul>
-              {facts.map((fact, index) => (
-                <li key={index}>{fact}</li>
-              ))}
-            </ul>
-          </>
-        ) : ''}
-        </div>
-        </div>
-                </header>
-      </section>
-      <section className={styles.comments}>
-        <h2>Comments</h2>
-        <CommentForm handleAddComment={handleAddComment} />
-        {!sighting.comments.length && <p>There are no comments.</p>}
+          </div>
 
-        {sighting.comments.map((comment) => (
-          <article key={comment._id}>
-            <header>
-              <div>
-                <p>
-                  {`${comment.author.username} posted on
-                  ${new Date(comment.createdAt).toLocaleDateString()}`}
-                </p>
-                {comment.author._id === user._id && (
-                  <>
-                    <Link to={`/sightings/${sightingId}/comments/${comment._id}/edit`}>Edit</Link>
-                    <button onClick={() => handleDeleteComment(comment._id)}>
-                      Delete Comment
-                    </button>
-                  </>
-                )}
+          <div className={styles.commentsSection}>
+            <h2>Comments</h2>
+            <CommentForm handleAddComment={handleAddComment} />
+            {!sighting.comments.length && <p>No comments yet.</p>}
+            {sighting.comments.map((comment) => (
+              <article key={comment._id} className={styles.comment}>
+                <header className={styles.commentHeader}>
+                  <p>
+                    {comment.author.username} on{" "}
+                    {new Date(comment.createdAt).toLocaleDateString()}
+                  </p>
+                  {comment.author._id === user._id && (
+                    <div className={styles.commentActions}>
+                      <Link
+                        to={`/sightings/${sightingId}/comments/${comment._id}/edit`}
+                        className={styles.cardIconButton}
+                        aria-label="Edit comment"
+                      >
+                        <FaEdit />
+                      </Link>
+                      <button
+                        onClick={() => handleDeleteComment(comment._id)}
+                        className={`${styles.cardIconButton} ${styles.deleteIcon}`}
+                        aria-label="Delete comment"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  )}
+                </header>
+                <p>{comment.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN */}
+        <div className={styles.rightColumn}>
+          <div className={styles.descriptionSection}>
+            <h2>Description</h2>
+            <p>
+              <strong>Posted by:</strong> {sighting.author.username}
+            </p>
+            <p>
+              <strong>Date:</strong> {new Date(sighting.createdAt).toLocaleDateString()}
+            </p>
+
+            <img
+              src={sighting.image || "https://i.imgur.com/YsLYeEI.jpeg"}
+              alt={sighting.title}
+              className={styles.mainImage}
+            />
+
+            <p>{sighting.text}</p>
+            <h5 className={styles[`category-${sighting.category}`]}>
+              {sighting.category}
+            </h5>
+
+            {sighting.author._id === user._id && (
+              <div className={styles.cardActions}>
+                <Link
+                  to={`/sightings/${sightingId}/edit`}
+                  className={styles.cardIconButton}
+                  aria-label="Edit sighting"
+                >
+                  <FaEdit />
+                </Link>
+
+                <button
+                  onClick={() => {
+                    if (window.confirm("Delete this sighting?")) {
+                      props.handleDeleteSighting(sightingId);
+                    }
+                  }}
+                  className={`${styles.cardIconButton} ${styles.deleteIcon}`}
+                  aria-label="Delete sighting"
+                >
+                  <FaTrash />
+                </button>
               </div>
-            </header>
-            <p>{comment.text}</p>
-          </article>
-        ))}
-      </section>
+            )}
+
+            <button className={styles.likeButton}>
+              {sighting.likes && sighting.likes.includes(user._id) ? "♥" : "♡"}
+            </button>
+          </div>
+
+          <div className={styles.birdInfoSection}>
+            {bird && (
+              <>
+                <h2>Bird Info</h2>
+                <p>
+                  <i>{bird.sciName}</i>
+                </p>
+                <p>
+                  <b>Size:</b> {bird.lengthMin}-{bird.lengthMax} cm
+                </p>
+                <p>
+                  <b>Regions:</b> {bird.region?.join(", ")}
+                </p>
+                <p>
+                  <b>Status:</b> {bird.status}
+                </p>
+                {bird.images?.[0] && (
+                  <img src={bird.images[0]} alt="Bird" className={styles.birdImage} />
+                )}
+              </>
+            )}
+          </div>
+
+          {facts.length > 0 && (
+            <div className={styles.factsSection}>
+              <h2>Fun Facts</h2>
+              <ul>
+                {facts.map((fact, index) => (
+                  <li key={index}>{fact}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
     </main>
-    </>
   );
 };
 
 export default SightingDetails;
+
+
