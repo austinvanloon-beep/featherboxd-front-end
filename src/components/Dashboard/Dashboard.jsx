@@ -1,131 +1,164 @@
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { FaHeart, FaRegHeart, FaEdit } from 'react-icons/fa';
 import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const ITEMS_PER_PAGE = 9;
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const [sightings, setSightings] = useState([]);
-
-  const handleLike = (sightingId) => {
-    alert(`Like clicked for sighting ${sightingId}`);
-  };
+  const [allSightings, setAllSightings] = useState([]);
+  const [visibleSightings, setVisibleSightings] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
+    if (!user) return;
+
     const fetchSightings = async () => {
       try {
         const fetchedSightings = await sightingService.index();
-        setSightings(fetchedSightings);
+        const userSightings = fetchedSightings.filter(
+          (sighting) => sighting.author.username === user.username
+        );
+        setAllSightings(userSightings);
+        setVisibleSightings(userSightings.slice(0, ITEMS_PER_PAGE));
+        setHasMore(userSightings.length > ITEMS_PER_PAGE);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
 
-  // fetch sightings
-  const fetchSightings = async () => {
-    try {
-      const fetchedSightings = await sightingService.index();
-      setSightings(fetchedSightings);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  
-  // delete button
-  const handleDelete = async (sightingId) => {
-    if (!window.confirm('Are you sure you want to delete this sighting?')) return;
-    try {
-      await sightingService.deleteSighting(sightingId);
-      setSightings((prev) => prev.filter((s) => s._id !== sightingId));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  // load sightings on mount
-  useEffect(() => {
-    if (user) fetchSightings();
+    fetchSightings();
   }, [user]);
 
-return (
-  <main className="dashboard-container">
-    <div className="dashboard-header">
-      <h1 className="dashboard-title">Welcome, {user.username}.</h1>
-    </div>
+  const loadMore = () => {
+    const nextItems = allSightings.slice(
+      visibleSightings.length,
+      visibleSightings.length + ITEMS_PER_PAGE
+    );
+    setVisibleSightings((prev) => [...prev, ...nextItems]);
+    if (visibleSightings.length + nextItems.length >= allSightings.length) {
+      setHasMore(false);
+    }
+  };
 
+  const handleLike = (sightingId) => {
+    setVisibleSightings((prevSightings) =>
+      prevSightings.map((sighting) => {
+        if (sighting._id === sightingId) {
+          const userHasLiked = sighting.likes?.includes(user._id);
+          let newLikes;
+          if (userHasLiked) {
+            newLikes = sighting.likes.filter((id) => id !== user._id);
+          } else {
+            newLikes = [...(sighting.likes || []), user._id];
+          }
+          return { ...sighting, likes: newLikes };
+        }
+        return sighting;
+      })
+    );
+  };
 
-  // main dashboard grid
+  if (!user) {
+    return <p style={{ textAlign: 'center' }}>Please log in to view your sightings.</p>;
+  }
+
   return (
     <main className="dashboard-container">
-      <div className="dashboard-header">
+      <header className="dashboard-header">
         <h1 className="dashboard-title">Welcome, {user.username}.</h1>
-      </div>
+      </header>
 
-    <div className="bird-title-wrapper">
-      <h2 className="bird-title">Here are your sightings:</h2>
-    </div>
+      <section className="bird-title-wrapper">
+        <h2 className="bird-title">Here are your sightings:</h2>
+      </section>
 
+      {visibleSightings.length === 0 ? (
+        <p className="no-sightings">You have no sightings.</p>
+      ) : (
+        <InfiniteScroll
+          dataLength={visibleSightings.length}
+          next={loadMore}
+          hasMore={hasMore}
+          loader={<p style={{ textAlign: 'center' }}>Loading more sightings...</p>}
+          className="sightings-grid"
+        >
+          {visibleSightings.map((sighting) => {
+            const userHasLiked = sighting.likes?.includes(user._id);
+            const likesCount = sighting.likes?.length || 0;
 
-    <div className="sightings-grid">
-        {!sightings.reduce((userSightings, sighting) => {return sighting.author.username === user.username ? userSightings + 1 : userSightings}, 0) ? (
-          <p>You have no sightings.</p>
-          ) : (
-            sightings.map((sighting) => (
-            sighting.author.username === user.username ? (
-            <div
-              key={sighting._id}
-              className="sighting-card"
-              onClick={() => navigate(`/sightings/${sighting._id}`)}
-            >
-              <p><b>{sighting.title.toUpperCase()}</b></p>
-              <img src={sighting.image ? sighting.image : "https://i.imgur.com/YsLYeEI.jpeg"} alt={sighting.title} />
+            return (
+              <article
+                key={sighting._id}
+                className="sighting-card"
+                onClick={() => navigate(`/sightings/${sighting._id}`)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    navigate(`/sightings/${sighting._id}`);
+                  }
+                }}
+              >
+                <img
+                  src={sighting.image || 'https://i.imgur.com/YsLYeEI.jpeg'}
+                  alt={sighting.title}
+                  className="sighting-image"
+                />
 
-              <div className="sighting-actions">
-                {/* edit button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/sightings/${sighting._id}/edit`);
-                  }}
-                >
-                  Edit
-                </button>
+                {/* Like & Edit Actions */}
+                <div className="sighting-actions">
+                  <div className="like-wrapper">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(sighting._id);
+                      }}
+                      aria-label={userHasLiked ? 'Unlike' : 'Like'}
+                      type="button"
+                      className="like-button"
+                    >
+                      {userHasLiked ? <FaHeart /> : <FaRegHeart />}
+                    </button>
+                    <span className="like-count">{likesCount}</span>
+                  </div>
 
-                {/* like button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLike(sighting._id);
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleLike(sighting._id);
-                  }}
-                >
-                  {sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}{' '}
-                  {sighting.likes ? sighting.likes.length : 0}
-                </button>
+                  <button
+                    className="card-edit-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/sightings/${sighting._id}/edit`);
+                    }}
+                    aria-label="Edit sighting"
+                    type="button"
+                  >
+                    <FaEdit />
+                  </button>
+                </div>
 
-                {/* delete button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(sighting._id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ) : '' ))
-        )
-      }
-    </div>
-  </main>
-);
-}
+                {/* Title Overlay */}
+                <p>{sighting.title.toUpperCase()}</p>
+              </article>
+            );
+          })}
+        </InfiniteScroll>
+      )}
+    </main>
+  );
+};
+
 export default Dashboard;
+
+
+
+
+
+
+
+
+

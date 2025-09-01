@@ -23,8 +23,12 @@
   font-weight: bold;
 }
 
+/* Links with icon and text */
 .navLeft li a,
 .navRight li a {
+  display: flex;
+  align-items: center;
+  gap: 6px;  /* space between icon and text */
   text-decoration: none;
   color: #333;
   padding: 8px 16px;
@@ -39,6 +43,13 @@
   color: white;
 }
 
+/* Icon sizing */
+.navLeft li a svg,
+.navRight li a svg {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
 .logoGroup {
   position: absolute;
   left: 50%;
@@ -48,13 +59,21 @@
   justify-content: center;
   text-decoration: none;
   padding-top: 5px; /* adjust if needed */
+  gap: 8px;
 }
 
 .logoGroup img {
   width: 80px; /* Increase logo size here */
   height: auto;
+  user-select: none;
 }
 
+.brandName {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  user-select: none;
+}
 
 /* Responsive adjustments */
 @media only screen and (max-width: 768px) {
