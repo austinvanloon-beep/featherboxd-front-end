@@ -49,7 +49,7 @@ const SightingForm = (props) => {
         </p>
         <form onSubmit={handleSubmit} className={styles.sightingForm}>
           <div className={styles.formGroup}>
-            <label htmlFor='title-input' className={styles.label}>Name</label>
+            <label htmlFor='title-input' className={styles.label}>Name <small>(An actual bird's name)</small></label>
             <input
               required
               type='text'
@@ -62,7 +62,7 @@ const SightingForm = (props) => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor='text-input' className={styles.label}>Text</label>
+            <label htmlFor='text-input' className={styles.label}>Comments</label>
             <textarea
               required
               name='text'
@@ -75,7 +75,7 @@ const SightingForm = (props) => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor='location-input' className={styles.label}>Location</label>
+            <label htmlFor='location-input' className={styles.label}>Location <small>(Be as specific as possible)</small></label>
             <input
               required
               type='text'
@@ -106,7 +106,7 @@ const SightingForm = (props) => {
 
           {/* Image URL input with 'image' as name */}
           <div className={styles.formGroup}>
-            <label htmlFor='image-input' className={styles.label}>Image URL</label>
+            <label htmlFor='image-input' className={styles.label}>Image URL <small>(Must be valid URL)</small></label>
             <input
               type='url'
               name='image'
@@ -114,6 +114,7 @@ const SightingForm = (props) => {
               className={styles.input}
               value={formData.image}
               onChange={handleChange}
+              pattern="https?://.*\.(png|jpg|jpeg|gif)"
               placeholder='https://example.com/image.jpg'
             />
           </div>
