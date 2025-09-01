@@ -52,7 +52,6 @@ const SightingDetails = (props) => {
     fetchSighting();
   }, [sightingId]);
 
-
   const handleAddComment = async (commentFormData) => {
     const newComment = await sightingService.createComment(sightingId, commentFormData);
     setSighting({ ...sighting, comments: [...sighting.comments, newComment] });
@@ -83,7 +82,7 @@ const SightingDetails = (props) => {
           <small><b>Size:</b> {info[0] ? `${info[0].lengthMin}-${info[0].lengthMax} cm` : 'Loading...'}</small>
           <small><b>Found in:</b> {info[0]?.region.map((location, index) => (
               <li key={index}>{location}</li>
-            ))} 
+            ))}
           </small>
           <small><b>Conservation status:</b> {info[0] ? info[0].status : 'Loading...'}</small>
           { info[0]?.images?.[0] && (<img src={info[0].images[0]} alt="Bird image" height="200" width="200" /> )}
@@ -102,6 +101,7 @@ const SightingDetails = (props) => {
                 <button onClick={() => {if (window.confirm('Are you sure you want to delete this sighting?')) {props.handleDeleteSighting(sightingId)}}} className={styles.editOrDelete}>Delete</button>
               </div>
             )}
+            <button>{sighting.likes && sighting.likes.includes(user._id) ? '♥' : '♡'}</button>
           </div>
           <div className={styles.facts}>
             <p><b>Location:</b> {sighting.location}</p>

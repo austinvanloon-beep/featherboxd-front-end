@@ -18,11 +18,11 @@ FeatherBOXD turns every birdwatching moments into a meaningful discovery. Perfec
 
 ---
 
-## Live App Link
+## Getting Started
 
 🔗 [Deployed App on Render](https://featherboxd.netlify.app/)
 
----
+🔗 [Back-end Repository](https://github.com/jelesho100/featherboxd-backend)
 
 ## Logo
 
@@ -36,6 +36,16 @@ FeatherBOXD turns every birdwatching moments into a meaningful discovery. Perfec
 - Heroku (Back-End deployment)
 - React
 - Nelify (Front-End deployment)
+- React
+- React Router
+- React Context
+- Javascript / ES6
+- CSS
+- Node.js
+- Express
+- MongoDB
+- Fetch API
+- JWT
 
 ---
 
@@ -48,9 +58,9 @@ FeatherBOXD turns every birdwatching moments into a meaningful discovery. Perfec
 
 ## Attributions
 
-- GIF background by Giphy
-- Fonts from Google Fonts
-- Google images
+- GIF background by Giphy (https://giphy.com/)
+- Fonts from Google Fonts (https://fonts.google.com/)
+- Google images (https://images.google.com/)
 
 
 ---
