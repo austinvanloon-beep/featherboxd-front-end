@@ -1,8 +1,10 @@
 import React from "react";
 import Navbar from "../NavBar/NavBar";
 import "./AboutPage.css";
+import { UserContext } from "../../contexts/UserContext";
 
 function AboutPage() {
+    const { user } = React.useContext(UserContext);
     return (
         <div className="about-page">
             <div className="about-link">
@@ -68,7 +70,7 @@ function AboutPage() {
                     <h2>Join us</h2>
                     <p>
                         <a href="/sign-up" className="btn">Sign Up</a>{" "}
-                        <a href="/community" className="btn btn-outline">See Community</a>
+                        <a href="/sightings" className="btn btn-outline">See Community</a>
                     </p>
                 </section>
             </main>
