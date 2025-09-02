@@ -45,38 +45,28 @@ const Dashboard = () => {
     }
   };
 
-  const observer = useRef();
-  const lastSightingRef = useCallback(
-    (node) => {
-      if (!hasMore) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          loadMore();
+const handleLike = async (sightingId) => {
+  setVisibleSightings((prevSightings) =>
+    prevSightings.map((sighting) => {
+      if (sighting._id === sightingId) {
+        const userHasLiked = sighting.likes?.includes(user._id);
+        let newLikes;
+        if (userHasLiked) {
+          newLikes = sighting.likes.filter((id) => id !== user._id);
+        } else {
+          newLikes = [...(sighting.likes || []), user._id];
         }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [hasMore, loadMore]
+        return { ...sighting, likes: newLikes };
+      }
+      return sighting;
+    })
   );
-
-  const handleLike = (sightingId) => {
-    setVisibleSightings((prevSightings) =>
-      prevSightings.map((sighting) => {
-        if (sighting._id === sightingId) {
-          const userHasLiked = sighting.likes?.includes(user._id);
-          let newLikes;
-          if (userHasLiked) {
-            newLikes = sighting.likes.filter((id) => id !== user._id);
-          } else {
-            newLikes = [...(sighting.likes || []), user._id];
-          }
-          return { ...sighting, likes: newLikes };
-        }
-        return sighting;
-      })
-    );
-  };
+    try {
+    await sightingService.likeSighting(sightingId, user._id);
+  } catch (err) {
+    console.error("Failed to update like on backend:", err);
+  }
+};
 
   if (!user) {
     return <p style={{ textAlign: 'center' }}>Please log in to view your sightings.</p>;
