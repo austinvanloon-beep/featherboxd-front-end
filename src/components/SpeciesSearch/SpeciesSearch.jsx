@@ -31,6 +31,7 @@ const SpeciesSearch = () => {
         <>
             <h1>Species Search by Region</h1>
             <h3>Want to know what birds to look for in your region? Search here!</h3>
+            <small>This search feature is powered by Ebird API.</small>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="region">Select a region:</label>
                 <select onChange={(event => setRegion(event.target.value))}>

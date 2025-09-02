@@ -10,7 +10,7 @@ const SightingForm = (props) => {
     text: '',
     location: '',
     category: 'Other',
-    image: '',  // Changed from imageUrl to image
+    image: '',
   });
 
   useEffect(() => {

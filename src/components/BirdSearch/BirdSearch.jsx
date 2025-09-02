@@ -25,7 +25,8 @@ const BirdSearch = () => {
     return (
         <>
             <h1>Sighting Search by Region</h1>
-            <h3>Search for external live sightings in your region, powered by Ebird API</h3>
+            <h3>Search for external live sightings in your region</h3>
+            <small>This search feature is powered by Ebird API.</small>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="region">Select a region:</label>
                 <select onChange={(event => setRegion(event.target.value))}>
