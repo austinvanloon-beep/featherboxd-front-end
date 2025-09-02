@@ -11,6 +11,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: sans-serif;
+  padding: 0;
+  overflow-y: auto;
+  
   
 
   --primary: #00a0df;
