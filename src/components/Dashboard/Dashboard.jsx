@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [allSightings, setAllSightings] = useState([]);
   const [visibleSightings, setVisibleSightings] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const observer = useRef();
 
   useEffect(() => {
     if (!user) return;
@@ -34,7 +35,8 @@ const Dashboard = () => {
     fetchSightings();
   }, [user]);
 
-  const loadMore = () => {
+  // ✅ Memoized loadMore
+  const loadMore = useCallback(() => {
     const nextItems = allSightings.slice(
       visibleSightings.length,
       visibleSightings.length + ITEMS_PER_PAGE
@@ -43,30 +45,47 @@ const Dashboard = () => {
     if (visibleSightings.length + nextItems.length >= allSightings.length) {
       setHasMore(false);
     }
-  };
+  }, [allSightings, visibleSightings]);
 
-const handleLike = async (sightingId) => {
-  setVisibleSightings((prevSightings) =>
-    prevSightings.map((sighting) => {
-      if (sighting._id === sightingId) {
-        const userHasLiked = sighting.likes?.includes(user._id);
-        let newLikes;
-        if (userHasLiked) {
-          newLikes = sighting.likes.filter((id) => id !== user._id);
-        } else {
-          newLikes = [...(sighting.likes || []), user._id];
+  
+  const lastSightingRef = useCallback(
+    (node) => {
+      if (!hasMore) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
         }
-        return { ...sighting, likes: newLikes };
-      }
-      return sighting;
-    })
+      });
+      if (node) observer.current.observe(node);
+    },
+    [hasMore, loadMore]
   );
+
+  
+  const handleLike = async (sightingId) => {
+    setVisibleSightings((prevSightings) =>
+      prevSightings.map((sighting) => {
+        if (sighting._id === sightingId) {
+          const userHasLiked = sighting.likes?.includes(user._id);
+          let newLikes;
+          if (userHasLiked) {
+            newLikes = sighting.likes.filter((id) => id !== user._id);
+          } else {
+            newLikes = [...(sighting.likes || []), user._id];
+          }
+          return { ...sighting, likes: newLikes };
+        }
+        return sighting;
+      })
+    );
+
     try {
-    await sightingService.likeSighting(sightingId, user._id);
-  } catch (err) {
-    console.error("Failed to update like on backend:", err);
-  }
-};
+      await sightingService.likeSighting(sightingId, user._id);
+    } catch (err) {
+      console.error('Failed to update like on backend:', err);
+    }
+  };
 
   if (!user) {
     return <p style={{ textAlign: 'center' }}>Please log in to view your sightings.</p>;
@@ -89,7 +108,6 @@ const handleLike = async (sightingId) => {
           {visibleSightings.map((sighting, index) => {
             const userHasLiked = sighting.likes?.includes(user._id);
             const likesCount = sighting.likes?.length || 0;
-
             const isLast = index === visibleSightings.length - 1;
 
             return (
@@ -152,4 +170,5 @@ const handleLike = async (sightingId) => {
 };
 
 export default Dashboard;
+
 
