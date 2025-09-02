@@ -6,7 +6,7 @@ import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 3;
 
 const Dashboard = () => {
   const navigate = useNavigate();
