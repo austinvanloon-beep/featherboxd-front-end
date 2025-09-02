@@ -71,7 +71,7 @@ const App = () => {
         />
         <Route
           path='/sightings/:sightingId'
-          element={user ? <SightingDetails handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />}
+          element={user ? <SightingDetails handleUpdateSighting={handleUpdateSighting} handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />}
         />
         <Route
           path='/sightings/new'
