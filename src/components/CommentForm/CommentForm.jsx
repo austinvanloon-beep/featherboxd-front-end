@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import * as sightingService from '../../services/sightingService';
+import styles from './CommentForm.module.css';
 
 const CommentForm = (props) => {
   const [formData, setFormData] = useState({ text: '' });
@@ -36,19 +37,23 @@ const CommentForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor='text-input'>Your comment:</label>
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <label htmlFor='text-input' className={styles.label}>Your comment:</label>
       <textarea
         required
         type='text'
         name='text'
         id='text-input'
         value={formData.text}
+        className={styles.input}
         onChange={handleChange}
       />
-      <button type='submit'>SUBMIT COMMENT</button>
+      <div className={styles.buttonGroup}>
+        <button type='submit' className={`${styles.button} ${styles.primaryBtn}`}>Submit Comment</button>
+      </div>
     </form>
   );
 };
 
 export default CommentForm;
+ 

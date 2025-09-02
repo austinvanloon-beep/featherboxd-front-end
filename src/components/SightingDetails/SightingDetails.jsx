@@ -80,7 +80,7 @@ const SightingDetails = (props) => {
               <p><b>Status:</b> {bird.status}</p>
 
               {bird.images?.[0] && (
-                <div className={styles.imageContainer}>
+                <div className={styles.infoImageContainer}>
                   <img
                     src={bird.images[0]}
                     alt="Bird"
@@ -97,6 +97,9 @@ const SightingDetails = (props) => {
         {/* Description Right */}
         <div className={styles.descriptionSection}>
           <h2>Description</h2>
+          <h5 className={styles[`category-${sighting.category}`]}>
+            {sighting.category}
+          </h5>
           <p><strong>Posted by:</strong> {sighting.author.username}</p>
           <p><strong>Date:</strong> {new Date(sighting.createdAt).toLocaleDateString()}</p>
 
@@ -108,12 +111,9 @@ const SightingDetails = (props) => {
               loading="lazy"
             />
           </div>
-
+          <div className={styles.textContainer}>
           <p>{sighting.text}</p>
-          <h5 className={styles[`category-${sighting.category}`]}>
-            {sighting.category}
-          </h5>
-
+          </div>
           {sighting.author._id === user._id && (
             <div className={styles.cardActions}>
               <Link to={`/sightings/${sightingId}/edit`} className={styles.cardIconButton} aria-label="Edit sighting">
@@ -157,6 +157,18 @@ const SightingDetails = (props) => {
         )}
       </div>
 
+      {/* Fun Facts Section */}
+      {facts.length > 0 && (
+        <div className={styles.factsSection}>
+          <h2>Fun Facts</h2>
+          <ul>
+            {facts.map((fact, index) => (
+              <li key={index}>{fact}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Comments Section */}
       <div className={styles.commentsSection}>
         <h2>Comments</h2>
@@ -192,18 +204,6 @@ const SightingDetails = (props) => {
           </article>
         ))}
       </div>
-
-      {/* Fun Facts Section */}
-      {facts.length > 0 && (
-        <div className={styles.factsSection}>
-          <h2>Fun Facts</h2>
-          <ul>
-            {facts.map((fact, index) => (
-              <li key={index}>{fact}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </main>
   );
 };
