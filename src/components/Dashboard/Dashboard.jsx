@@ -1,80 +1,154 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { FaHeart, FaRegHeart, FaEdit } from 'react-icons/fa';
 import { UserContext } from '../../contexts/UserContext';
-
 import * as sightingService from '../../services/sightingService';
 import './Dashboard.css';
 
+const ITEMS_PER_PAGE = 9;
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const [sightings, setSightings] = useState([]);
+  const [allSightings, setAllSightings] = useState([]);
+  const [visibleSightings, setVisibleSightings] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
 
-
-  const handleComment = (sightingId) => {
-    alert(`Comment clicked for sighting ${sightingId}`)
-  };
-
-  const handleTag = (sightingId) => {
-    alert(`Tag clicked for sighting ${sightingId}`)
-  };
-
-  const handleLike = (sightingId) => {
-    alert(`Like clicked for sighting ${sightingId}`)
-  };
-
-  const handleImage = (sightingId) => {
-    alert(`Tag clicked for sighting ${sightingId}`)
-  };
-
-
-
-  // fetch sightings
   useEffect(() => {
+    if (!user) return;
+
     const fetchSightings = async () => {
       try {
         const fetchedSightings = await sightingService.index();
-        setSightings(fetchedSightings);
+        const userSightings = fetchedSightings.filter(
+          (sighting) => sighting.author.username === user.username
+        );
+        setAllSightings(userSightings);
+        setVisibleSightings(userSightings.slice(0, ITEMS_PER_PAGE));
+        setHasMore(userSightings.length > ITEMS_PER_PAGE);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
-    if (user) fetchSightings();
+
+    fetchSightings();
   }, [user]);
+
+  const loadMore = () => {
+    const nextItems = allSightings.slice(
+      visibleSightings.length,
+      visibleSightings.length + ITEMS_PER_PAGE
+    );
+    setVisibleSightings((prev) => [...prev, ...nextItems]);
+    if (visibleSightings.length + nextItems.length >= allSightings.length) {
+      setHasMore(false);
+    }
+  };
+
+  const handleLike = (sightingId) => {
+    setVisibleSightings((prevSightings) =>
+      prevSightings.map((sighting) => {
+        if (sighting._id === sightingId) {
+          const userHasLiked = sighting.likes?.includes(user._id);
+          let newLikes;
+          if (userHasLiked) {
+            newLikes = sighting.likes.filter((id) => id !== user._id);
+          } else {
+            newLikes = [...(sighting.likes || []), user._id];
+          }
+          return { ...sighting, likes: newLikes };
+        }
+        return sighting;
+      })
+    );
+  };
+
+  if (!user) {
+    return <p style={{ textAlign: 'center' }}>Please log in to view your sightings.</p>;
+  }
 
   return (
     <main className="dashboard-container">
-      <div className="dashboard-header">
-        <h1 className="dashboard-title">Welcome, {user.username}</h1>
-      </div>
+      <header className="dashboard-header">
+        <h1 className="dashboard-title">Welcome, {user.username}.</h1>
+      </header>
 
-      <div className="bird-title-wrapper">
-        <h2 className="bird-title">Blue jay</h2>
-      </div>
+      <section className="bird-title-wrapper">
+        <h2 className="bird-title">Here are your sightings:</h2>
+      </section>
 
-      <div className="sightings-grid">
-        {sightings.length > 0 ? (
-          sightings.map((sighting) => (
-            <div key={sighting._id} className="sighting-card">
-              <img src={sighting.imageUrl} alt={sighting.title} />
-              <div className="sighting-actions">
-                <button onClick={() => handleComment(sighting._id)}>Comment</button>
-                <button onClick={() => handleTag(sighting._id)}>Tag</button>
-                <button onClick={() => handleLike(sighting._id)}>Like</button>
-                <button onClick={() => handleImage(sighting._id)}>Insert URL</button>
-              </div>
+      {visibleSightings.length === 0 ? (
+        <p className="no-sightings">You have no sightings.</p>
+      ) : (
+        <InfiniteScroll
+          dataLength={visibleSightings.length}
+          next={loadMore}
+          hasMore={hasMore}
+          loader={<p style={{ textAlign: 'center' }}>Loading more sightings...</p>}
+          className="sightings-grid"
+        >
+          {visibleSightings.map((sighting) => {
+            const userHasLiked = sighting.likes?.includes(user._id);
+            const likesCount = sighting.likes?.length || 0;
 
-            </div>
-          ))
-        ) : (
-          <>
-            <div className="sighting-box">Sighting 1</div>
-            <div className="sighting-box">Sighting 2</div>
-            <div className="sighting-box">Sighting 3</div>
-          </>
-        )}
-      </div>
+            return (
+              <article
+                key={sighting._id}
+                className="sighting-card"
+                onClick={() => navigate(`/sightings/${sighting._id}`)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    navigate(`/sightings/${sighting._id}`);
+                  }
+                }}
+              >
+                <img
+                  src={sighting.image || 'https://i.imgur.com/YsLYeEI.jpeg'}
+                  alt={sighting.title}
+                  className="sighting-image"
+                />
+
+                {/* Like & Edit Actions */}
+                <div className="sighting-actions">
+                  <div className="like-wrapper">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(sighting._id);
+                      }}
+                      aria-label={userHasLiked ? 'Unlike' : 'Like'}
+                      type="button"
+                      className="like-button"
+                    >
+                      {userHasLiked ? <FaHeart /> : <FaRegHeart />}
+                    </button>
+                    <span className="like-count">{likesCount}</span>
+                  </div>
+
+                  <button
+                    className="card-edit-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/sightings/${sighting._id}/edit`);
+                    }}
+                    aria-label="Edit sighting"
+                    type="button"
+                  >
+                    <FaEdit />
+                  </button>
+                </div>
+
+                {/* Title Overlay */}
+                <p>{sighting.title.toUpperCase()}</p>
+              </article>
+            );
+          })}
+        </InfiniteScroll>
+      )}
     </main>
-
   );
 };
 

@@ -1,141 +1,281 @@
+/* Container & general styles */
 .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* Layout for top row: Bird Info & Description side by side */
+.topRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Bird Info styles */
+.birdInfoSection {
+  flex: 1;
+  min-width: 300px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.birdInfoSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Description styles */
+.descriptionSection {
+  flex: 2;
+  min-width: 300px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.descriptionSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* New container for images to fill their parent */
+.imageContainer, .infoImageContainer {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.infoImageContainer {
+  height: 300px;
+}
+
+.birdImage,
+.mainImage {
+  display: block;
+  width: 100%;
   height: 100%;
-  display: flex;
-  overflow: scroll;
-  align-items: center;
-  flex-direction: column;
-  background-color: var(--card-background);
-}
-
-.container > section {
-  width: 100%;
-  padding: 21px;
-  display: flex;
-  max-width: 700px;
-  flex-direction: column;
-}
-
-.container section article {
-  padding: 0;
-  width: 100%;
-  min-height: 140px;
-  margin: 4px 0px 14px;
-}
-
-.container header div {
-  width: 100%;
-  display: flex;
-  margin-top: 10px;
-  align-items: center;
-}
-
-.container header {
-  display: flex;
-  margin-bottom: 21px;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.container h1 {
-  margin: 0 0 7px 0;
-}
-
-.container header > p {
+  object-fit: cover;
+  border-radius: 0; /* no border radius on image itself */
   margin: 0;
-  opacity: 1;
-  font-weight: 600;
-  color: var(--primary);
-  margin: 7px 0px 14px 0px;
-}
-
-.container header button,
-.container header a {
-  width: 30px;
-  height: 30px;
-
-  font-size: 14px;
-  font-weight: 500;
-
-  background: none;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 5px;
-  margin: 0 0 0 7px;
-}
-
-/* Button icon styling */
-/* This styling will be used when we add in our reusable icon component */
-
-.container header button img,
-.container header a img {
-  width: 24px;
-  height: 24px;
-  opacity: 0.25;
-}
-
-.container header button:hover,
-.container header a:hover {
-  background-color: var(--border);
-}
-
-.container header button:hover img,
-.container header a:hover img {
-  filter: invert(1);
-  opacity: 1;
-}
-
-.container header button:active {
-  background-color: rgb(190, 190, 190);
-}
-
-/* Comment form styling */
-
-.container form {
   padding: 0;
-  display: flex;
-  border: none;
-  max-width: 100%;
-  box-shadow: none;
-  flex-direction: row;
-  align-items: center;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
 }
 
-.container form input,
-.container form textarea {
-  width: 100%;
-  padding: 14px;
-  font-size: 14px;
-  resize: vertical;
-  border-radius: 5px;
-  margin: 14px 0px 14px 0px;
-  border: 1px solid var(--border);
-}
-
-.container form textarea {
-  min-height: 50px;
-}
-
-.container form button {
-  color: white;
+/* Categories */
+.category-bird,
+.category-mammal,
+.category-other {
   font-weight: 600;
-  background: #00a0df;
-  width: 40px;
-  height: 40px;
-  margin: 0 0 0 14px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-transform: capitalize;
+  margin-top: 0.5rem;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
 }
 
-.container form button img {
-  width: 25px;
-  height: 25px;
+/* Customize categories with colors */
+h5 {
+  display: inline;
+  padding: 3px;
+  border-radius: 8px;
+  color: white;
 }
+
+.category-Waterfowl {
+  background-color: blue;
+}
+
+
+.category-Perching {
+  background-color: green;
+}
+
+
+.category-Raptors {
+  background-color: red;
+}
+
+
+.category-Other {
+  background-color: black;
+}
+
+/* Comments area of description*/
+.textContainer {
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 1rem;
+}
+
+/* Card actions: edit/delete buttons */
+.cardActions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.cardIconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #333;
+  transition: color 0.2s ease-in-out;
+}
+
+.cardIconButton:hover {
+  color: #0077cc;
+}
+
+.deleteIcon {
+  color: #cc0000;
+}
+
+.deleteIcon:hover {
+  color: #ff3333;
+}
+
+/* Like button */
+.likeButton {
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #cc0000;
+  user-select: none;
+}
+
+/* Map Section */
+.mapSection {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 1200px;
+}
+
+.mapSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Comments Section */
+.commentsSection {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 1200px;
+}
+
+.commentsSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.comment {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.commentActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.commentActions .cardIconButton {
+  font-size: 1rem;
+  color: #666;
+}
+
+.commentActions .cardIconButton:hover {
+  color: #0077cc;
+}
+
+/* Fun Facts Section */
+.factsSection {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin-bottom: 1rem;
+}
+
+.factsSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.factsSection ul {
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.factsSection li {
+  margin-bottom: 0.5rem;
+}
+
+/* Loading state */
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 3rem;
+  color: #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .topRow {
+    flex-direction: column;
+  }
+
+  .birdInfoSection,
+  .descriptionSection {
+    min-width: 100%;
+  }
+
+  .imageContainer {
+    height: 250px; /* fixed height for smaller screens to fill nicely */
+  }
+
+  .birdImage,
+  .mainImage {
+    height: 100%; /* fill the container */
+  }
+}
+
+
+

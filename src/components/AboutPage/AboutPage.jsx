@@ -74,7 +74,7 @@ function AboutPage() {
                                 Sign Up
                             </a>
                         )}
-                        <a href="/sign-up" className="btn">Sign Up</a>{" "}
+                        {" "}
                         <a href="/sightings" className="btn btn-outline">See Community</a>
                     </p>
                 </section>
