@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { FaHeart, FaRegHeart, FaEdit } from 'react-icons/fa';
 import { UserContext } from '../../contexts/UserContext';
 import * as sightingService from '../../services/sightingService';
@@ -46,6 +45,21 @@ const Dashboard = () => {
     }
   };
 
+  const observer = useRef();
+  const lastSightingRef = useCallback(
+    (node) => {
+      if (!hasMore) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [hasMore, loadMore]
+  );
+
   const handleLike = (sightingId) => {
     setVisibleSightings((prevSightings) =>
       prevSightings.map((sighting) => {
@@ -81,21 +95,18 @@ const Dashboard = () => {
       {visibleSightings.length === 0 ? (
         <p className="no-sightings">You have no sightings.</p>
       ) : (
-        <InfiniteScroll
-          dataLength={visibleSightings.length}
-          next={loadMore}
-          hasMore={hasMore}
-          loader={<p style={{ textAlign: 'center' }}>Loading more sightings...</p>}
-          className="sightings-grid"
-        >
-          {visibleSightings.map((sighting) => {
+        <section className="sightings-grid">
+          {visibleSightings.map((sighting, index) => {
             const userHasLiked = sighting.likes?.includes(user._id);
             const likesCount = sighting.likes?.length || 0;
+
+            const isLast = index === visibleSightings.length - 1;
 
             return (
               <article
                 key={sighting._id}
                 className="sighting-card"
+                ref={isLast ? lastSightingRef : null}
                 onClick={() => navigate(`/sightings/${sighting._id}`)}
                 role="button"
                 tabIndex={0}
@@ -111,7 +122,6 @@ const Dashboard = () => {
                   className="sighting-image"
                 />
 
-                {/* Like & Edit Actions */}
                 <div className="sighting-actions">
                   <div className="like-wrapper">
                     <button
@@ -141,15 +151,15 @@ const Dashboard = () => {
                   </button>
                 </div>
 
-                {/* Title Overlay */}
                 <p>{sighting.title.toUpperCase()}</p>
               </article>
             );
           })}
-        </InfiniteScroll>
+        </section>
       )}
     </main>
   );
 };
 
 export default Dashboard;
+
