@@ -69,6 +69,11 @@ function AboutPage() {
                 <section className="about-cta">
                     <h2>Join us</h2>
                     <p>
+                        {!user && (
+                            <a href="/sign-up" className="btn">
+                                Sign Up
+                            </a>
+                        )}
                         <a href="/sign-up" className="btn">Sign Up</a>{" "}
                         <a href="/sightings" className="btn btn-outline">See Community</a>
                     </p>
