@@ -1,4 +1,3 @@
-import { Link } from "react-router";  
 import { FaHeart, FaRegHeart, FaEdit } from "react-icons/fa";
 import styles from "./SightingList.module.css";
 
