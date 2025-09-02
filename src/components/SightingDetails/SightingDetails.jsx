@@ -178,7 +178,7 @@ const SightingDetails = (props) => {
           <article key={comment._id} className={styles.comment}>
             <header className={styles.commentHeader}>
               <p>
-                {comment.author.username} on{" "}
+                <b>{comment.author.username}</b> on{" "}
                 {new Date(comment.createdAt).toLocaleDateString()}
               </p>
               {comment.author._id === user._id && (
