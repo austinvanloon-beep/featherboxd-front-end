@@ -31,11 +31,11 @@ const SpeciesSearch = () => {
     return (
         <>
             <div className={styles.speciesSearchWrapper}>
-                <h1 className={styles.speciesSearchTitle}>Species Search by Region</h1>
-                <h3 className={styles.speciesSearchSubtitle}>Want to know what birds to look for in your region? Search here!</h3>
-                <small>This search feature is powered by Ebird API.</small>
+                <h1 className={styles.speciesSearchTitle}>Species Search by Area</h1>
+                <h3 className={styles.speciesSearchSubtitle}>Want to know what birds to look for in your area? Search here!</h3>
+                <small>This search feature is powered by eBird API.</small>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="region">Select a region:</label>
+                    <label htmlFor="region">Select an area:</label>
                     <select className={styles.input} onChange={(event => setRegion(event.target.value))}>
                         {regionData.map((region) => (
                             <option key={region._id} value={region.value}>{region.label}</option>

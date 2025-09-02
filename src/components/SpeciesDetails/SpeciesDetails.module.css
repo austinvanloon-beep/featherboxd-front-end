@@ -6,12 +6,15 @@
 }
 
 .spec {
-    border-radius: 8px;
-    background-color: #E5E4E2;
-    color: blue;
+    margin-top: 1rem;
+    color: #0A8059;
     padding: 21px 21px 28px 21px;
     border: 1px solid rgb(220, 220, 220);
-    box-shadow: -1px 5px 19px -5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -1px 5px 19px -5px rgba(0, 0, 0, 0.25);
     -webkit-box-shadow: -1px 5px 19px -5px rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    max-width: 460px;
+    text-align: center;
 }
