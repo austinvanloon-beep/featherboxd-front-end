@@ -1,20 +1,18 @@
-.like-count {
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  margin-left: 0.25rem;
-  user-select: none;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  background-color: #f0f2f5; /* subtle background for contrast */
 }
 
-/* Font and Container */
 .dashboard-container {
   padding: 2rem 1rem;
   font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  background-color: white;
 }
 
-/* Unified heading & text styling */
 .dashboard-container p,
 .dashboard-container h1,
 .dashboard-container h2,
@@ -26,7 +24,6 @@
   opacity: 1 !important;
 }
 
-/* Header */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -40,23 +37,6 @@
   font-weight: bold;
 }
 
-/* Edit Button */
-.edit-button {
-  background-color: #85c254;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.edit-button:hover {
-  background-color: #409b6d;
-}
-
-/* Sub-header */
 .bird-title-wrapper {
   display: flex;
   justify-content: center;
@@ -68,17 +48,17 @@
   font-weight: bold;
 }
 
-/* Grid Layout */
 .sightings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 0 auto 3rem;
+  padding-bottom: 1rem; /* give some bottom padding so last card is not clipped */
 }
 
-/* Card Styles */
+/* Card */
 .sighting-card {
   background: #f9f9f9;
   border-radius: 12px;
@@ -87,7 +67,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   margin: 1rem auto;
   max-width: 400px;
   height: 550px;
@@ -97,33 +77,23 @@
   position: relative;
 }
 
-.sighting-actions button svg {
-  color: white;
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-}
-
-/* Hover effect */
 .sighting-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Image Styling */
 .sighting-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   border-radius: 12px 12px 0 0;
   flex-shrink: 0;
   display: block;
 }
 
-/* Title overlay on image */
 .sighting-card p {
   position: absolute;
-  bottom: 20px; 
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(255, 255, 255, 0.9);
@@ -138,28 +108,26 @@
   color: #2c3e50;
 }
 
-/* Actions (like button, like count, edit button) */
+/* Actions */
 .sighting-actions {
   position: absolute;
   top: 12px;
   left: 12px;
   right: 12px;
   display: flex;
-  justify-content: space-between; /* Like group left, edit button right */
+  justify-content: space-between;
   align-items: center;
   background: transparent;
   padding: 0 0.5rem;
   z-index: 3;
 }
 
-/* Like wrapper */
 .like-wrapper {
   display: flex;
   align-items: center;
 }
 
-/* Buttons styling */
-.sighting-actions button {
+.like-button {
   padding: 0;
   font-weight: 600;
   font-size: 2rem;
@@ -177,18 +145,27 @@
   border-radius: 50%;
 }
 
-.sighting-actions button:hover {
+.like-button:hover {
   color: #059669;
   background: rgba(16, 185, 129, 0.1);
 }
 
-/* Edit button styling */
+.like-count {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  margin-left: 0.25rem;
+  user-select: none;
+}
+
 .card-edit-button {
   background: transparent;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #555;
+  color: #ffffff;
   transition: color 0.3s ease;
   width: 48px;
   height: 48px;
@@ -210,6 +187,8 @@
     padding: 0 1rem;
   }
 }
+
+
 
 
 
