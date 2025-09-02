@@ -114,19 +114,15 @@ const updateComment = async (sightingId, commentId, commentFormData) => {
   }
 };
 
-export async function likeSighting(id) {
-  try {
-    const res = await fetch(`${BASE_URL}/${id}/like`, {
-      method: 'POST',
-    });
-    if (!res.ok) throw new Error('Failed to like sighting');
-    // return updated sighting with like amount
-    return res.json();
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
+export const likeSighting = async (sightingId, userId) => {
+  const res = await fetch(`/api/sightings/${sightingId}/like`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId })
+  });
+  if (!res.ok) throw new Error("failed to like sighting");
+  return res.json();
+};
 
 export {
   index,

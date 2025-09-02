@@ -47,6 +47,28 @@ const SightingDetails = (props) => {
     fetchSighting();
   }, [sightingId]);
 
+  const handleLike = async (sightingId) => {
+    if (!user) return;
+
+    setSighting((prevSighting) => {
+      const userHasLiked = prevSighting.likes?.includes(user._id);
+      let newLikes;
+      if (userHasLiked) {
+        newLikes = prevSighting.likes.filter((id) => id !== user._id);
+      } else {
+        newLikes = [...(prevSighting.likes || []), user._id];
+      }
+      return { ...prevSighting, likes: newLikes };
+    });
+
+    try {
+      await sightingService.likeSighting(sightingId, user._id);
+    } catch (err) {
+      console.error("Failed to update like on backend:", err);
+    }
+  };
+
+
   const handleAddComment = async (commentFormData) => {
     const newComment = await sightingService.createComment(sightingId, commentFormData);
     setSighting({ ...sighting, comments: [...sighting.comments, newComment] });
@@ -132,9 +154,12 @@ const SightingDetails = (props) => {
               </button>
             </div>
           )}
-
-          <button className={styles.likeButton} aria-label="Like button">
-            {sighting.likes?.includes(user._id) ? "♥" : "♡"}
+          <button
+            className={styles.likeButton}
+            aria-label="Like button"
+            onClick={() => handleLike(sighting._id)}
+          >
+            {sighting.likes?.includes(user._id) ? "♥" : "♡"} {sighting.likes?.length || 0}
           </button>
         </div>
       </div>
@@ -208,10 +233,5 @@ const SightingDetails = (props) => {
   );
 };
 
+
 export default SightingDetails;
-
-
-
-
-
-

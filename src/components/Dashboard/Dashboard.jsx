@@ -46,23 +46,28 @@ const Dashboard = () => {
     }
   };
 
-  const handleLike = (sightingId) => {
-    setVisibleSightings((prevSightings) =>
-      prevSightings.map((sighting) => {
-        if (sighting._id === sightingId) {
-          const userHasLiked = sighting.likes?.includes(user._id);
-          let newLikes;
-          if (userHasLiked) {
-            newLikes = sighting.likes.filter((id) => id !== user._id);
-          } else {
-            newLikes = [...(sighting.likes || []), user._id];
-          }
-          return { ...sighting, likes: newLikes };
+const handleLike = async (sightingId) => {
+  setVisibleSightings((prevSightings) =>
+    prevSightings.map((sighting) => {
+      if (sighting._id === sightingId) {
+        const userHasLiked = sighting.likes?.includes(user._id);
+        let newLikes;
+        if (userHasLiked) {
+          newLikes = sighting.likes.filter((id) => id !== user._id);
+        } else {
+          newLikes = [...(sighting.likes || []), user._id];
         }
-        return sighting;
-      })
-    );
-  };
+        return { ...sighting, likes: newLikes };
+      }
+      return sighting;
+    })
+  );
+    try {
+    await sightingService.likeSighting(sightingId, user._id);
+  } catch (err) {
+    console.error("Failed to update like on backend:", err);
+  }
+};
 
   if (!user) {
     return <p style={{ textAlign: 'center' }}>Please log in to view your sightings.</p>;
@@ -151,5 +156,6 @@ const Dashboard = () => {
     </main>
   );
 };
+
 
 export default Dashboard;

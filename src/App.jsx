@@ -49,26 +49,51 @@ const App = () => {
     navigate(`/sightings/${sightingId}`);
   };
 
-  const handleLike = async (id) => {
-    try {
-      const updatedSighting = await sightingService.likeSighting(id);
-      setSightings((prev) =>
-        prev.map((s) => (s._id === id ? updatedSighting : s))
-      );
-    } catch (err) {
-      console.error('Error liking sighting:', err);
-    }
-  };
+const handleLike = async (sightingId) => {
+  if (!user) return;
+  setSightings((prev) =>
+    prev.map((s) => {
+      if (s._id === sightingId) {
+        const userHasLiked = s.likes?.includes(user._id);
+        let newLikes;
+        if (userHasLiked) {
+          newLikes = s.likes.filter((id) => id !== user._id);
+        } else {
+          newLikes = [...(s.likes || []), user._id];
+        }
+        return { ...s, likes: newLikes };
+      }
+      return s;
+    })
+  );
+
+  try {
+    await sightingService.likeSighting(sightingId, user._id);
+  } catch (err) {
+    console.error("Failed to update like on backend:", err);
+  }
+};
 
   return (
     <>
       <NavBar />
       <Routes>
         <Route path='/' element={user ? <Dashboard handleDeleteSighting={handleDeleteSighting} /> : <Landing />} />
-        <Route
-          path='/sightings'
-          element={user ? <SightingList sightings={sightings}/> : <SignInForm />}
-        />
+          <Route
+            path='/sightings'
+            element={
+              user ? (
+                <SightingList
+                  sightings={sightings}
+                  currentUserId={user._id}
+                  onLike={handleLike}
+                  onEdit={(id) => navigate(`/sightings/${id}/edit`)}
+                />
+              ) : (
+                <SignInForm />
+              )
+            }
+          />
         <Route
           path='/sightings/:sightingId'
           element={user ? <SightingDetails handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />}
