@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Link } from 'react-router';
 import { UserContext } from '../../contexts/UserContext';
 
-import { FaHome, FaFeather, FaPlus, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaSearchLocation, FaSearch } from 'react-icons/fa';
+import { FaHome, FaFeather, FaPlus, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaSearchLocation, FaSearch, FaInfoCircle } from 'react-icons/fa';
 
 import styles from './NavBar.module.css';
 import Logo from '../../assets/images/logo.svg';
@@ -22,6 +22,11 @@ const NavBar = () => {
         <li>
           <Link to='/'>
             <FaHome /> Home
+          </Link>
+        </li>
+        <li>
+          <Link to='/about'>
+            <FaInfoCircle /> About
           </Link>
         </li>
         {user && (

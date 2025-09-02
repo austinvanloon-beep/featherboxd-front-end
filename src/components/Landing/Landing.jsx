@@ -1,5 +1,3 @@
-import React from 'react';
-import Navbar from "../NavBar/NavBar";
 import './Landing.css';
 
 const Landing = () => {

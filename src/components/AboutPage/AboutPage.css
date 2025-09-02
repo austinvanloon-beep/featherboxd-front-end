@@ -1,0 +1,120 @@
+.about-page {
+    background: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.about-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.about-link a {
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+}
+
+.about-content {
+    flex: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.about-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #1e90ff;
+    margin-bottom: 0.25rem;
+}
+
+.about-intro {
+    text-align: center;
+    color: #333;
+    margin: 0 auto 2rem;
+    max-width: 680px;
+    font-size: 1.1rem;
+}
+
+.about-content section {
+    margin: 1.5rem 0;
+    display: grid;
+    justify-items: center;
+}
+
+.about-content h2 {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #1e90ff;
+    margin: 0 0 0.5rem;
+    position: relative;
+}
+
+.about-content h2::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 2px;
+    background: #1e90ff;
+    margin: 6px auto 0;
+}
+
+.about-content section>p,
+.about-content section>ul {
+    width: min(680px, 100%);
+    margin: 0.5rem auto 0;
+    text-align: center;
+    padding: 0;
+}
+
+.about-content ul {
+    list-style: disc inside;
+}
+
+.about-content li {
+    margin: 0.35rem 0;
+    line-height: 1.5;
+}
+
+.about-cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #1e90ff;
+    color: #fff;
+    border-color: #1e90ff;
+}
+
+.btn-primary:hover {
+    background-color: #187bcd;
+    border-color: #187bcd;
+}
+
+.btn-outline {
+    background-color: #fff;
+    color: #1e90ff;
+    border-color: #1e90ff;
+}
+
+.btn-outline:hover {
+    background-color: #f0f8ff;
+}
