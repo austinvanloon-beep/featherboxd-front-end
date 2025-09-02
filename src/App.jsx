@@ -62,28 +62,14 @@ const App = () => {
     <>
       <NavBar />
       <Routes>
-<<<<<<< HEAD
-        <Route 
-          path='/' 
-          element={user ? <Dashboard sightings={sightings} handleLike={handleLike} handleDeleteSighting={handleDeleteSighting} /> : <Landing />} 
-        />
-        <Route 
-          path='/sightings' 
-          element={user ? <SightingList sightings={sightings}/> : <SignInForm />} 
-=======
         <Route path='/' element={user ? <Dashboard handleDeleteSighting={handleDeleteSighting} /> : <Landing />} />
         <Route
           path='/sightings'
           element={user ? <SightingList sightings={sightings}/> : <SignInForm />}
->>>>>>> d345f6519ca6d5a2c2529b9037a6c8777610754e
         />
         <Route
           path='/sightings/:sightingId'
-<<<<<<< HEAD
-          element={user ? <SightingDetails sightings={sightings} handleLike={handleLike} handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />} 
-=======
           element={user ? <SightingDetails handleDeleteSighting={handleDeleteSighting}/> : <SignInForm />}
->>>>>>> d345f6519ca6d5a2c2529b9037a6c8777610754e
         />
         <Route
           path='/sightings/new'
