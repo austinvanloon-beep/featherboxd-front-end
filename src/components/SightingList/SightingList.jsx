@@ -1,7 +1,13 @@
 import { FaHeart, FaRegHeart, FaEdit } from "react-icons/fa";
 import styles from "./SightingList.module.css";
+import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
-const SightingList = ({ sightings, currentUserId, onLike, onEdit }) => {
+const SightingList = ({ sightings, currentUserId, onLike }) => {
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
   return (
     <main className={styles["sightings-grid"]}>
       {sightings.map((sighting) => {
@@ -39,6 +45,7 @@ const SightingList = ({ sightings, currentUserId, onLike, onEdit }) => {
                 <span className={styles["like-count"]}>{likesCount}</span>
               </div>
 
+            {sighting.author.username === user.username && (
               <button
                 className={styles["card-edit-button"]}
                 aria-label="Edit sighting"
@@ -46,11 +53,12 @@ const SightingList = ({ sightings, currentUserId, onLike, onEdit }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  if (onEdit) onEdit(sighting._id);
+                  navigate(`/sightings/${sighting._id}/edit`);
                 }}
               >
                 <FaEdit />
               </button>
+              )}
             </div>
 
             {/* Image */}
