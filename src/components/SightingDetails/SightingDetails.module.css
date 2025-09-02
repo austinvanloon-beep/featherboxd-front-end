@@ -1,93 +1,190 @@
+/* Container & general styles */
 .container {
-  padding: 2rem;
-  font-family: "Segoe UI", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  font-family: Arial, sans-serif;
+  color: #222;
 }
 
 .title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
   text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 2rem;
 }
 
-.content {
+/* Layout for top row: Bird Info & Description side by side */
+.topRow {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  width: 100%;
-  max-width: 1200px;
+  margin-bottom: 2rem;
 }
 
-.leftColumn,
-.rightColumn {
+/* Bird Info styles */
+.birdInfoSection {
   flex: 1;
   min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Sections */
-.mapSection,
-.commentsSection,
-.descriptionSection,
-.birdInfoSection,
-.factsSection {
   background: #f9f9f9;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-img {
-  border-radius: 12px;
-  margin-top: 1rem;
-  display: block;
-  max-width: 100%;
-  height: auto;
+.birdInfoSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 
+/* Description styles */
+.descriptionSection {
+  flex: 2;
+  min-width: 300px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.descriptionSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* New container for images to fill their parent */
+.imageContainer {
+  width: 100%;
+  height: 200px; /* adjust as needed */
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.birdImage,
 .mainImage {
-  width: 300px;
-  height: 300px;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  margin-top: 1rem;
+  border-radius: 0; /* no border radius on image itself */
+  margin: 0;
+  padding: 0;
 }
 
-.birdImage {
-  width: 300px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-top: 1rem;
+/* Categories */
+.category-bird,
+.category-mammal,
+.category-other {
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-top: 0.5rem;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
 }
 
-/* Buttons */
-.likeButton {
-  font-size: 2rem;
-  background: transparent;
+/* Customize categories with colors */
+.category-bird {
+  background-color: #ffcccc;
+  color: #b30000;
+}
+
+.category-mammal {
+  background-color: #cce5ff;
+  color: #003d99;
+}
+
+.category-other {
+  background-color: #d9d9d9;
+  color: #333;
+}
+
+/* Card actions: edit/delete buttons */
+.cardActions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.cardIconButton {
+  background: none;
   border: none;
   cursor: pointer;
-  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+  transition: color 0.2s ease-in-out;
 }
 
-/* Comment styling */
+.cardIconButton:hover {
+  color: #0077cc;
+}
+
+.deleteIcon {
+  color: #cc0000;
+}
+
+.deleteIcon:hover {
+  color: #ff3333;
+}
+
+/* Like button */
+.likeButton {
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #cc0000;
+  user-select: none;
+}
+
+/* Map Section */
+.mapSection {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 1200px;
+}
+
+.mapSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Comments Section */
+.commentsSection {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 1200px;
+}
+
+.commentsSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
 .comment {
-  border-bottom: 1px solid #ddd;
-  padding: 0.5rem 0;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .commentHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
   font-size: 0.9rem;
-  margin-bottom: 0.25rem;
+  color: #555;
+  margin-bottom: 0.5rem;
 }
 
 .commentActions {
@@ -95,52 +192,66 @@ img {
   gap: 0.5rem;
 }
 
-/* Edit/Delete Buttons Styling - matching Dashboard */
-
-.cardActions {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  justify-content: flex-start;
-  align-items: center;
+.commentActions .cardIconButton {
+  font-size: 1rem;
+  color: #666;
 }
 
-.cardIconButton {
-  background: transparent;
-  border: none;
+.commentActions .cardIconButton:hover {
+  color: #0077cc;
+}
+
+/* Fun Facts Section */
+.factsSection {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+}
+
+.factsSection h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.factsSection ul {
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.factsSection li {
+  margin-bottom: 0.5rem;
+}
+
+/* Loading state */
+.loading {
   font-size: 1.5rem;
-  cursor: pointer;
-  color: #555;
-  transition: color 0.3s ease;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  text-decoration: none; /* for links */
-}
-
-.cardIconButton:hover {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-}
-
-/* Delete button hover style */
-.deleteIcon:hover {
-  color: #e53935;
-  background: rgba(229, 57, 53, 0.1);
+  text-align: center;
+  padding: 3rem;
+  color: #888;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .content {
+  .topRow {
     flex-direction: column;
   }
 
-  .mainImage,
-  .birdImage {
-    width: 100%;
-    height: auto;
+  .birdInfoSection,
+  .descriptionSection {
+    min-width: 100%;
+  }
+
+  .imageContainer {
+    height: 250px; /* fixed height for smaller screens to fill nicely */
+  }
+
+  .birdImage,
+  .mainImage {
+    height: 100%; /* fill the container */
   }
 }
+
+
+
